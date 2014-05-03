@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Assignment # 3</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Assignment # 3</h1>
+
+<p>Download the file</p>
+
+<pre><code class="r">fileUrl &lt;- &quot;https://d396qusza40orc.cloudfront.net/rprog%2Fdata%2FProgAssignment3-data.zip&quot;
+
+if (!file.exists(&quot;Assignment3-data.zip&quot;)) {
+    download.file(fileUrl, destfile = &quot;Assignment3-data.zip&quot;, method = &quot;wget&quot;)
+}
+</code></pre>
+
+<p>Unzip the file</p>
+
+<pre><code class="r">if (!file.exists(&quot;Assignment3-data&quot;)) {
+    unzip(&quot;Assignment3-data.zip&quot;, overwrite = TRUE)
+}
+</code></pre>
+
+<pre><code class="r">getwd()
+</code></pre>
+
+<pre><code>## [1] &quot;/Users/Vikas/share/rprog&quot;
+</code></pre>
+
+<p>1 Plot the 30-day mortality rates for heart attack</p>
+
+<pre><code class="r">outcome &lt;- read.csv(&quot;outcome-of-care-measures.csv&quot;, colClasses = &quot;character&quot;)
+head(outcome)
+</code></pre>
+
+<pre><code>##   Provider.Number                    Hospital.Name
+## 1          010001 SOUTHEAST ALABAMA MEDICAL CENTER
+## 2          010005    MARSHALL MEDICAL CENTER SOUTH
+## 3          010006   ELIZA COFFEE MEMORIAL HOSPITAL
+## 4          010007         MIZELL MEMORIAL HOSPITAL
+## 5          010008      CRENSHAW COMMUNITY HOSPITAL
+## 6          010010    MARSHALL MEDICAL CENTER NORTH
+##                    Address.1 Address.2 Address.3         City State
+## 1     1108 ROSS CLARK CIRCLE                           DOTHAN    AL
+## 2 2505 U S HIGHWAY 431 NORTH                             BOAZ    AL
+## 3         205 MARENGO STREET                         FLORENCE    AL
+## 4              702 N MAIN ST                              OPP    AL
+## 5        101 HOSPITAL CIRCLE                          LUVERNE    AL
+## 6    8000 ALABAMA HIGHWAY 69                     GUNTERSVILLE    AL
+##   ZIP.Code County.Name Phone.Number
+## 1    36301     HOUSTON   3347938701
+## 2    35957    MARSHALL   2565938310
+## 3    35631  LAUDERDALE   2567688400
+## 4    36467   COVINGTON   3344933541
+## 5    36049    CRENSHAW   3343353374
+## 6    35976    MARSHALL   2565718000
+##   Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                      14.3
+## 2                                                      18.5
+## 3                                                      18.1
+## 4                                             Not Available
+## 5                                             Not Available
+## 6                                             Not Available
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                No Different than U.S. National Rate
+## 2                                                No Different than U.S. National Rate
+## 3                                                No Different than U.S. National Rate
+## 4                                                           Number of Cases Too Small
+## 5                                                           Number of Cases Too Small
+## 6                                                           Number of Cases Too Small
+##   Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                                                 12.1
+## 2                                                                                 14.7
+## 3                                                                                 14.8
+## 4                                                                        Not Available
+## 5                                                                        Not Available
+## 6                                                                        Not Available
+##   Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                                                 17.0
+## 2                                                                                 23.0
+## 3                                                                                 21.8
+## 4                                                                        Not Available
+## 5                                                                        Not Available
+## 6                                                                        Not Available
+##   Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                                            666
+## 2                                                                             44
+## 3                                                                            329
+## 4                                                                             14
+## 5                                                                              9
+## 6                                                                             22
+##                                Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack
+## 1                                                                                                  
+## 2                                                                                                  
+## 3                                                                                                  
+## 4 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+## 5 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+## 6 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+##   Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                       11.4
+## 2                                                       15.2
+## 3                                                       11.3
+## 4                                                       13.6
+## 5                                                       13.8
+## 6                                                       12.5
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                 No Different than U.S. National Rate
+## 2                                                        Worse than U.S. National Rate
+## 3                                                 No Different than U.S. National Rate
+## 4                                                 No Different than U.S. National Rate
+## 5                                                 No Different than U.S. National Rate
+## 6                                                 No Different than U.S. National Rate
+##   Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                                                   9.5
+## 2                                                                                  12.2
+## 3                                                                                   9.1
+## 4                                                                                  10.0
+## 5                                                                                   9.9
+## 6                                                                                   9.9
+##   Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                                                  13.7
+## 2                                                                                  18.8
+## 3                                                                                  13.9
+## 4                                                                                  18.2
+## 5                                                                                  18.7
+## 6                                                                                  15.6
+##   Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                                             741
+## 2                                                                             234
+## 3                                                                             523
+## 4                                                                             113
+## 5                                                                              53
+## 6                                                                             163
+##   Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure
+## 1                                                                      
+## 2                                                                      
+## 3                                                                      
+## 4                                                                      
+## 5                                                                      
+## 6                                                                      
+##   Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                                   10.9
+## 2                                                   13.9
+## 3                                                   13.4
+## 4                                                   14.9
+## 5                                                   15.8
+## 6                                                    8.7
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                             No Different than U.S. National Rate
+## 2                                             No Different than U.S. National Rate
+## 3                                             No Different than U.S. National Rate
+## 4                                             No Different than U.S. National Rate
+## 5                                             No Different than U.S. National Rate
+## 6                                                   Better than U.S. National Rate
+##   Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                                                               8.6
+## 2                                                                              11.3
+## 3                                                                              11.2
+## 4                                                                              11.6
+## 5                                                                              11.4
+## 6                                                                               6.8
+##   Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                                                              13.7
+## 2                                                                              17.0
+## 3                                                                              15.8
+## 4                                                                              19.0
+## 5                                                                              21.5
+## 6                                                                              11.0
+##   Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                                                         371
+## 2                                                                         372
+## 3                                                                         836
+## 4                                                                         239
+## 5                                                                          61
+## 6                                                                         315
+##   Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia
+## 1                                                                  
+## 2                                                                  
+## 3                                                                  
+## 4                                                                  
+## 5                                                                  
+## 6                                                                  
+##   Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                                19.0
+## 2                                       Not Available
+## 3                                                17.8
+## 4                                       Not Available
+## 5                                       Not Available
+## 6                                       Not Available
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                          No Different than U.S. National Rate
+## 2                                                     Number of Cases Too Small
+## 3                                          No Different than U.S. National Rate
+## 4                                                     Number of Cases Too Small
+## 5                                                     Number of Cases Too Small
+## 6                                                     Number of Cases Too Small
+##   Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                                                             16.6
+## 2                                                                    Not Available
+## 3                                                                             14.9
+## 4                                                                    Not Available
+## 5                                                                    Not Available
+## 6                                                                    Not Available
+##   Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                                                             21.7
+## 2                                                                    Not Available
+## 3                                                                             21.5
+## 4                                                                    Not Available
+## 5                                                                    Not Available
+## 6                                                                    Not Available
+##   Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                                                      728
+## 2                                                                       21
+## 3                                                                      342
+## 4                                                                        1
+## 5                                                                        4
+## 6                                                                       13
+##                                      Footnote...Hospital.30.Day.Readmission.Rates.from.Heart.Attack
+## 1                                                                                                  
+## 2 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+## 3                                                                                                  
+## 4 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+## 5 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+## 6 number of cases is too small (fewer than 25) to reliably tell how well the hospital is performing
+##   Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                                 23.7
+## 2                                                 22.5
+## 3                                                 19.8
+## 4                                                 27.1
+## 5                                                 24.7
+## 6                                                 23.9
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                           No Different than U.S. National Rate
+## 2                                           No Different than U.S. National Rate
+## 3                                                 Better than U.S. National Rate
+## 4                                           No Different than U.S. National Rate
+## 5                                           No Different than U.S. National Rate
+## 6                                           No Different than U.S. National Rate
+##   Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                                                              21.3
+## 2                                                                              19.2
+## 3                                                                              17.2
+## 4                                                                              22.4
+## 5                                                                              19.9
+## 6                                                                              20.1
+##   Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                                                              26.5
+## 2                                                                              26.1
+## 3                                                                              22.9
+## 4                                                                              31.9
+## 5                                                                              30.2
+## 6                                                                              28.2
+##   Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                                                       891
+## 2                                                                       264
+## 3                                                                       614
+## 4                                                                       135
+## 5                                                                        59
+## 6                                                                       173
+##   Footnote...Hospital.30.Day.Readmission.Rates.from.Heart.Failure
+## 1                                                                
+## 2                                                                
+## 3                                                                
+## 4                                                                
+## 5                                                                
+## 6                                                                
+##   Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                             17.1
+## 2                                             17.6
+## 3                                             16.9
+## 4                                             19.4
+## 5                                             18.0
+## 6                                             18.7
+##   Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                       No Different than U.S. National Rate
+## 2                                       No Different than U.S. National Rate
+## 3                                       No Different than U.S. National Rate
+## 4                                       No Different than U.S. National Rate
+## 5                                       No Different than U.S. National Rate
+## 6                                       No Different than U.S. National Rate
+##   Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                                                          14.4
+## 2                                                                          15.0
+## 3                                                                          14.7
+## 4                                                                          15.9
+## 5                                                                          14.0
+## 6                                                                          15.7
+##   Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                                                          20.4
+## 2                                                                          20.6
+## 3                                                                          19.5
+## 4                                                                          23.2
+## 5                                                                          22.8
+## 6                                                                          22.2
+##   Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                                                   400
+## 2                                                                   374
+## 3                                                                   842
+## 4                                                                   254
+## 5                                                                    56
+## 6                                                                   326
+##   Footnote...Hospital.30.Day.Readmission.Rates.from.Pneumonia
+## 1                                                            
+## 2                                                            
+## 3                                                            
+## 4                                                            
+## 5                                                            
+## 6
+</code></pre>
+
+<p>Number of columns </p>
+
+<pre><code class="r">ncol(outcome)
+</code></pre>
+
+<pre><code>## [1] 46
+</code></pre>
+
+<pre><code class="r">names(outcome)
+</code></pre>
+
+<pre><code>##  [1] &quot;Provider.Number&quot;                                                                      
+##  [2] &quot;Hospital.Name&quot;                                                                        
+##  [3] &quot;Address.1&quot;                                                                            
+##  [4] &quot;Address.2&quot;                                                                            
+##  [5] &quot;Address.3&quot;                                                                            
+##  [6] &quot;City&quot;                                                                                 
+##  [7] &quot;State&quot;                                                                                
+##  [8] &quot;ZIP.Code&quot;                                                                             
+##  [9] &quot;County.Name&quot;                                                                          
+## [10] &quot;Phone.Number&quot;                                                                         
+## [11] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot;                            
+## [12] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot;  
+## [13] &quot;Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot; 
+## [14] &quot;Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot; 
+## [15] &quot;Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot;       
+## [16] &quot;Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot;                 
+## [17] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;                           
+## [18] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot; 
+## [19] &quot;Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;
+## [20] &quot;Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;
+## [21] &quot;Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;      
+## [22] &quot;Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;                
+## [23] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;                               
+## [24] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;     
+## [25] &quot;Lower.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;    
+## [26] &quot;Upper.Mortality.Estimate...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;    
+## [27] &quot;Number.of.Patients...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;          
+## [28] &quot;Footnote...Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;                    
+## [29] &quot;Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;                                  
+## [30] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;        
+## [31] &quot;Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;     
+## [32] &quot;Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;     
+## [33] &quot;Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;             
+## [34] &quot;Footnote...Hospital.30.Day.Readmission.Rates.from.Heart.Attack&quot;                       
+## [35] &quot;Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;                                 
+## [36] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;       
+## [37] &quot;Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;    
+## [38] &quot;Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;    
+## [39] &quot;Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;            
+## [40] &quot;Footnote...Hospital.30.Day.Readmission.Rates.from.Heart.Failure&quot;                      
+## [41] &quot;Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;                                     
+## [42] &quot;Comparison.to.U.S..Rate...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;           
+## [43] &quot;Lower.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;        
+## [44] &quot;Upper.Readmission.Estimate...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;        
+## [45] &quot;Number.of.Patients...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;                
+## [46] &quot;Footnote...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;
+</code></pre>
+
+<p>To make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset), run</p>
+
+<pre><code class="r">names(outcome)[11]
+</code></pre>
+
+<pre><code>## [1] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot;
+</code></pre>
+
+<pre><code class="r">outcome[, 11] &lt;- as.numeric(outcome[, 11])
+</code></pre>
+
+<pre><code>## Warning: NAs introduced by coercion
+</code></pre>
+
+<pre><code class="r">## You may get a warning about NAs being introduced; that is okay
+</code></pre>
+
+<pre><code class="r">hist(outcome[, 11])
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAGwCAYAAABFI3d+AAAEJGlDQ1BJQ0MgUHJvZmlsZQAAOBGFVd9v21QUPolvUqQWPyBYR4eKxa9VU1u5GxqtxgZJk6XtShal6dgqJOQ6N4mpGwfb6baqT3uBNwb8AUDZAw9IPCENBmJ72fbAtElThyqqSUh76MQPISbtBVXhu3ZiJ1PEXPX6yznfOec7517bRD1fabWaGVWIlquunc8klZOnFpSeTYrSs9RLA9Sr6U4tkcvNEi7BFffO6+EdigjL7ZHu/k72I796i9zRiSJPwG4VHX0Z+AxRzNRrtksUvwf7+Gm3BtzzHPDTNgQCqwKXfZwSeNHHJz1OIT8JjtAq6xWtCLwGPLzYZi+3YV8DGMiT4VVuG7oiZpGzrZJhcs/hL49xtzH/Dy6bdfTsXYNY+5yluWO4D4neK/ZUvok/17X0HPBLsF+vuUlhfwX4j/rSfAJ4H1H0qZJ9dN7nR19frRTeBt4Fe9FwpwtN+2p1MXscGLHR9SXrmMgjONd1ZxKzpBeA71b4tNhj6JGoyFNp4GHgwUp9qplfmnFW5oTdy7NamcwCI49kv6fN5IAHgD+0rbyoBc3SOjczohbyS1drbq6pQdqumllRC/0ymTtej8gpbbuVwpQfyw66dqEZyxZKxtHpJn+tZnpnEdrYBbueF9qQn93S7HQGGHnYP7w6L+YGHNtd1FJitqPAR+hERCNOFi1i1alKO6RQnjKUxL1GNjwlMsiEhcPLYTEiT9ISbN15OY/jx4SMshe9LaJRpTvHr3C/ybFYP1PZAfwfYrPsMBtnE6SwN9ib7AhLwTrBDgUKcm06FSrTfSj187xPdVQWOk5Q8vxAfSiIUc7Z7xr6zY/+hpqwSyv0I0/QMTRb7RMgBxNodTfSPqdraz/sDjzKBrv4zu2+a2t0/HHzjd2Lbcc2sG7GtsL42K+xLfxtUgI7YHqKlqHK8HbCCXgjHT1cAdMlDetv4FnQ2lLasaOl6vmB0CMmwT/IPszSueHQqv6i/qluqF+oF9TfO2qEGTumJH0qfSv9KH0nfS/9TIp0Wboi/SRdlb6RLgU5u++9nyXYe69fYRPdil1o1WufNSdTTsp75BfllPy8/LI8G7AUuV8ek6fkvfDsCfbNDP0dvRh0CrNqTbV7LfEEGDQPJQadBtfGVMWEq3QWWdufk6ZSNsjG2PQjp3ZcnOWWing6noonSInvi0/Ex+IzAreevPhe+CawpgP1/pMTMDo64G0sTCXIM+KdOnFWRfQKdJvQzV1+Bt8OokmrdtY2yhVX2a+qrykJfMq4Ml3VR4cVzTQVz+UoNne4vcKLoyS+gyKO6EHe+75Fdt0Mbe5bRIf/wjvrVmhbqBN97RD1vxrahvBOfOYzoosH9bq94uejSOQGkVM6sN/7HelL4t10t9F4gPdVzydEOx83Gv+uNxo7XyL/FtFl8z9ZAHF4bBsrEwAALw5JREFUeAHt3Qm8bWVdN/CLjKYMggioyFUcMS2ScAqHUiwgUwsRDRU0rbQXyUotJyg1c+KVEn1FLfJFzTBNESEHnEJMP6igFPMoDsigTDL2+9+7l+02e+27z+Hcs9fa5/t8Pr+zhr32Ws/zXeee/15rn33uqlUaAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQJdF9iw6x3UPwItAntl/YOSi5Ibh7bZI/O/mFyZXJPsmuyeXJ38JJm23SEb3jrtxnOyXdk9NVmdXJDckKyv1gfffTL4ByYPSKq/lyXTtp2z4a8nVyU/HvOk0cc3zjZ1vDpWpb6nr0g0AgQIrDiB+sFZBfg+IyM/ZbB+78H6owfL+41s17a4ZR54a/Kitg3mdP3zM67ybLLNehpnn3x/OuTxhgV4bJFtzxo8d98xzxv3+FaD7Rv/g8c8zyoCCxKoV6UagXkW+NcM7vXJd6Yc5F9ku0OSuqJaSW3PwWBr7NslP1pPg++b7+VxeGzy/6b0qCv++p67b8v2bY/X3aVfSY5oeZ7VBBYssNGCn+EJBPolcF26W7dIbxp0u96Wekbyy0ndBv1K8rmkfpDXuocn1X4tqXV1B6Da5smTkkcndffgk8lXk+H21Cw8PrkwOSqpq+J6a+CdyUOSeluhjvWw5F7Ju5NzkzruY5L7JGcnn0jOSqodkNw9OTJ5TnK/5DPJx5LHJb+VfDf5h+QHSVub1P/n5Um7Dp5YBagK2ocHy6OT6mc9vnVS4/9QcktSrZ5b/Tk9OS6pVts/MvlsLaS1+W6bx2p8906+lpyYXJI0bVL/67E/TM5JvpX8blI/2/4xKceDkvKvuzvvT5p2x8zU2HdJzkv+f1KWw63epvjC8IoJ83Vr/bTk+qTe4tgpGW6THr85G345qbeTNAIECKxogSqytybPTB43lLpSr/Vtt+gPGzx+aab1Q7i2rUJVBeGPB8u1rlmf2VV1+/Trg3XNY/UD+RVJ096YmeaxelFRP+jrRcV5SbUqMvX4fw2mNf/QpApizde2PxnM1+8P7JxUOzmpx7+Z1AuVKqa1/JGknlPHquUqihsk49q6+l8FufbR5PhxO8m6vx7aptn2i1lXhbLafkmtP7oWBq3untS6lyZtvlVgfzDY7sbBtCx2Sqqtq/87Zps6xnlJfV803xs/zPznkmuTerzy8qRavSj4dlLrmsfrPfY6J02rW/T1fTJt+8VsWC8g6gVZTWvf+yZNW9fjtd0hST3PLfrS0AgQWJECzQ/x+mE4LuMK/B2ybV2Vfz+polHtT5NDk3skd06OTGp/r03qqrJa88O6rmrvlVRRruNXkf+lZKekClMV3F9JtkiOSWo/5yfVmgJf2z052adWpr0sqavV2m/17yNJPe/ApFpT4N+T+Q2TKpT1eF0lVsG4a1KFv9bVGMa1dfV/6zzp80nto/q2ZTLamhci5+WBxyQPSqq413Nel1RbV4Fv8z0+z6391IukerHw4qTG9zdJtXX1vynwtY+91jxj7Z2ZWj4lqX0ekNRyXSVX+8ukluvFyGbJMwbLH8+0aQst8M3zatr0ebjAT/O4Aj+sZP52CdQPFI1AnwUOT+dfM5RLJgymrn7PT+6W1BVjFahNkvcm9byrk7pyrHZlUleAdVW8Z1KtXghcmHwsOS6pfz9VUKrQbpR8LflSUgX3Xcm49pms/NfkE4MHq6g9K6mi+XfJI5Jqd1o7+dnXenFxc1J3AKp9O/lGcllyTlJtu7WT//V1mv5fnmfUrehqVyT14mW0PWmwogriF5IzkrcM1u0zmK5rMs63nlMviqodmVyXvCO5c/JnyTT9z2ZrWu3/k4P5xulfslz7/Mpg/faDaXlXq3O8X1IvAqqgPz7RCMyFQP1Q0gj0WeCIdP7coQHsnfm2K9narK5Eq1A/NanCUnlVUkX6P5PRVi8AtkqquJ439ODZg/ltMq0r62pXrp2s+fqjofnh2UuHFzL/8qSugKs4nZBUH3ZIbkmGWxWiatevnfyv99uvHayrYjjapun/6HPGLd9tsPKsoQebFxZlMNwaj1pXx5/UNs2Dd0rqarpeXFSrsTfjX0j/G6Pax6jTqFG9gKj2lOQ31sz9z/dR9eeawToTAr0VqCsQjcBKEagf3PdNPppUUdo9qSu8KjIHJdWawtK8+K2rum8kVbT2TJrW3Ao+LSs+l9Tz9kjqGNXqBcS4VvtrWhWZw5KfJDsmT0/OSMa1pl/NY8PL4wp7s900/W+2nTQ9ZfBgM+5abApjGVRriuIWaxfXfN1paL5mm34P+16c9TWGR9UGaXWO6or7r5KF9L/Zd572szZuXT346cEWdYxdkl9K/jSp8TXjyKxGoL8CCnx/z52eL1ygrhLflVSB//NkdbJVUu38NV//5xb9b2f5ZYN17x5Mj870Hcm/Jw9LzkyOSerKs273/1xSV7UnJa9MxrXqQ9OqeNWVfhXE/ZMXJ89Nqg0XybVrFv91Xf2fZs/1Quiy5BnJJ5N/SP4yqQJaL1KqNS9O6oVQFcu6hT/6QqdezFQb9i3TarXPes6Hk4cn5ybVlqL/a/f0P19rDNUOTQ5J3pfU2yYvT9rafnmgztlRbRtYT4AAAQK3X+Cq7KKK5X1GdlVXmrV+78H6Ksq1XD+cq1Vh/lRSt8Rrff3APjy5Q1LtwUkV3XqsKTCZXfV7g+Vaf3NyQrJT0rRtM/OxpIr9V5PfTGrbpugdNFg+MtPh9uwsXJDUthcmVTRr/tik2slJLe9aC2lPSGr5uFoYtHrBUetqbG1tXf3/tzyx9lF3IdpaXelWf25Matvzk8Y5s2vaYflapvX4l5J6oVPzL02qjfPdOOv/Jqnb6s1+35r55pxkdqJ/3f2o551dGw7auzKtdc8dLN9jsDx8Tn8/6y4frK/vpw8ld0yaVuO4tFnIdP+k9tm84Bh66Daz7x9su+9tHlm7ou3xQwbPO7jleVYTIECAwDoEqqisTmo62jbJinslwwWm2Wb7zNypWRhMt8z0j5InJ3UVX+0hSRWDT9fCOtoGefzu69hmqR4e1/+F7rvGv92EJ1WRvOuEx9t8N8pz7jnhefXQUvR/9BBV/OvYo220wNfjb0xeM7rhEi4r8EuIaVcECBBYCoFTspOmoL8p86cPll+xFDu3j5kIVIG/Ljkm2S/59aTegqkXGUvd6kVTHefrSX0fuYIPgkaAAIEuCNTt8c8n9RG5m5K67V5Xe5smWj8F6hzWLfpK/c7G5sno3ZusWpJWd4GaY9X0+UuyVzshQIAAgSUVGHdrf0kPYGcECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQKA/Ahv0p6t6SmBFC+yS0d9zhgLfzrEvmeHxHZoAgQUKKPALBLM5gRkJnJPjHjWjY2+Z4+6RPHpGx3dYAgQIECAwtwLHznBkW+fYszz+DIfu0AT6K3CH/nZdzwkQIECAAIE2AQW+TcZ6AgQIECDQYwEFvscnT9cJECBAgECbgALfJmM9AQIECBDosYAC3+OTp+sECBAgQKBNQIFvk7GeAAECBAj0WECB7/HJ03UCBAgQINAmoMC3yVhPgAABAgR6LKDA9/jk6ToBAgQIEGgTUODbZKwnQIAAAQI9FlDge3zydJ0AAQIECLQJKPBtMtYTIECAAIEeCyjwPT55uk6AAAECBNoEFPg2GesJECBAgECPBRT4Hp88XSdAgAABAm0CCnybjPUECBAgQKDHAgp8j0+erhMgQIAAgTYBBb5NxnoCBAgQINBjAQW+xydP1wkQIECAQJuAAt8mYz0BAgQIEOixgALf45On6wQIECBAoE1AgW+TsZ4AAQIECPRYQIHv8cnTdQIECBAg0CagwLfJWE+AAAECBHosoMD3+OTpOgECBAgQaBNQ4NtkrCdAgAABAj0WUOB7fPJ0nQABAgQItAko8G0y1hMgQIAAgR4LKPA9Pnm6ToAAAQIE2gQU+DYZ6wkQIECAQI8FFPgenzxdJ0CAAAECbQIKfJuM9QQIECBAoMcCCnyPT56uEyBAgACBNgEFvk3GegIECBAg0GMBBb7HJ0/XCRAgQIBAm4AC3yZjPQECBAgQ6LGAAt/jk6frBAgQIECgTUCBb5OxngABAgQI9FhAge/xydN1AgQIECDQJqDAt8lYT4AAAQIEeiygwPf45Ok6AQIECBBoE1Dg22SsJ0CAAAECPRZQ4Ht88nSdAAECBAi0CSjwbTLWEyBAgACBHgso8D0+ebpOgAABAgTaBBT4NhnrCRAgQIBAjwUU+B6fPF0nQIAAAQJtAhu1PTDD9dWnzZMrZtgHhyYwKnB0Vmw8unKZljfJcR60TMdyGAIE5kSgKwW+foC9NjkguUeyQXJtcl7yluR9iUZglgJb5uAvnFEH6oXFV2Z0bIclQKCnAl0p8EfEb/tk7+Tc5Jpki2SX5PBks+TIRCMwK4GbcuDvzejgW+e4t87o2A5LgACB2yVQV+pV4Me1R2TlCeMesI7AMgocu4zHGj1UFfiLR1cu43Idf5bjX8ahOhSB+RHoyi/ZnR7Sx7ew7pP1P2x5zGoCBAgQIEBgjEBXbtG/On07JjkkOSf5cVLvedYvFlUf90o0AgQIECBAYEqBrhT4U9PfXZNHJquTul1fV+31vvsXEu8/BkEjQIAAAQLTCnSlwFd/r08+l1SffEwuCBoBAgQIEFisQFfeg6+Pyb0+uSi5Ibk8qd+kr/fmD0w0AgQIECBAYAECXbmCX6qPyd0vY79Py/i3yvr6bf2vtjxuNQECBAgQmBuBrhT4PSNa778Pf874qiyfnBycHJpM8zn4+iM59V7+uPaQrLwgUeDH6VhHgAABAnMl0JUC33xM7gNjdBfyMbmT8vzKuLZvVm477gHrCBAgQIDAvAl0pcD7mNy8fWcZDwECBAjMVKArBd7H5Gb6beDgBAgQIDBvAl0p8OXafEyuMa6/P39z4jPwjYgpAQIECBCYUqArH5O7V/p7dLJbUu+TvyepX7i7MnlvUh+j0wgQIECAAIEpBbpS4A9Lfy9Mvp38UVJ3Fn4+eWhSf/TmVYlGgAABAgQITCnQlVv0j0l/H5jUH7l5avKU5OKkWhX3d66Z84UAAQIECBCYSqArV/BnprfPHvT4pEyH/3OZ+pjcWYPHTAgQIECAAIEpBLpyBf+i9PUTyfOSs5M3JwcltyRbJHWFrxEgQIAAAQJTCnSlwJ+T/u6SPDF5QFLvx1+R1JX7cclNiUaAAAECBAhMKdCVAl/drY/DnThILWsECBAgQIDAIgW68h78IrvvaQQIECBAgMA4AQV+nIp1BAgQIECg5wIKfM9PoO4TIECAAIFxAgr8OBXrCBAgQIBAzwUU+J6fQN0nQIAAAQLjBBT4cSrWESBAgACBngso8D0/gbpPgAABAgTGCSjw41SsI0CAAAECPRdQ4Ht+AnWfAAECBAiME1Dgx6lYR4AAAQIEei6gwPf8BOo+AQIECBAYJ6DAj1OxjgABAgQI9FxAge/5CdR9AgQIECAwTkCBH6diHQECBAgQ6LmAAt/zE6j7BAgQIEBgnIACP07FOgIECBAg0HMBBb7nJ1D3CRAgQIDAOIGNxq20jgABAiMC22X5xSPrlnPx5Bzs68t5QMci0HcBBb7vZ1D/CSyPwH1zmO8tz6Fuc5SNs+awZO/bPGIFAQKtAgp8K40HCBAYErgp8/88tLycs1vnYL+znAd0LALzIOA9+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQU+Hk4i8ZAgAABAgRGBBT4ERCLBAgQIEBgHgQ2mjCIl+SxLZOjk/MmbOchAgQIECBAoGMCk67gj0tfN0++lJyUPDe5c6IRIECAAAECHReYVODPSt//JLlX8obkMckZyd8nj0g0AgQIECBAoKMCkwp80+WtM3P/QW7K9EfJ4ckHE40AAQIECBDooMCk9+D3SH9fntT0E8mhyWeSW5J6YXBJsjo5P9EIECBAgACBDglMKvB11f7x5JnJVSN9riJ/YFJFXiNAgAABAgQ6JjDpFv1709cq7L8w6PMfZlpFfcPB8qcyvXEwb0KAAAECBAh0SGBSgX9a+nlI8r1Bf7+Q6f7JcwbLJgQIECBAgEBHBSYV+N9In/8iOXPQ99MzrYL/O4NlEwIECBAgQKCjApMK/AXp85NG+v3YLP94ZJ1FAgQIECBAoGMCk37Jrt6D/3Syd/KV5KHJdkld2WsECBAgQIBAhwUmFfj6Dfn6gzZPSO6XHJWcnNRv0K/PVn2qv6B3xfo8iH0TIECAAIF5FphU4Gvc9Vv0xy4DwCY5xmuTA5J7JBsk1yb1N/Dfkrwv0QgQIECAAIEpBSYV+K2yj3ckD0mqADft+MzUf0SzlO2I7Gz7pN4OODe5Jtki2SWpv5q3WXJkohEgQIAAAQJTCEwq8H+W59f/Jvd/kquH9nX50PxSze6ZHT0yaT6SV/utuwf1lsDByaGJAh8EjQABAgQITCMwqcDXrfK6gv/cNDu6ndvUR/Aen3xgzH72ybofjllvFQECBAgQINAiMKnAfyTPqffE/yP5Qcvzl2r1q7OjY5L6nP05SX0Ur+4ePCipPu6VaAQIECBAgMCUApMK/N2zjyqs+yb1vvjNSbX6E7VL/R78qdnnrkndpl+d1PvxddVet+XrL+jdmmgECBAgQIDAlAKTCvwnso+vDfazTaZXJlXk18d78HWY65N6O6D65GNyQdAIECBAgMBiBSb9Jbv6HHz9Jbv3JG9K6pZ5/ena9fGX7Oq39F+fXJTckNSLiPpN+npv/sBEI0CAAAECBBYgMOkK/gXZz68m9Z/O/Evy2eTJSa1/XbKUbak+Jlf9fXRLxx6c9ee1PGY1AQIECBCYK4FJBX6PjPTNyXcHI74x0/pM+juTpS7we2afS/ExuQuyn7ZWY623ATQCBAgQIDD3ApMKfN0uryJ/0pDCb2X+0qHlpZpdqo/JnZMOVca1+j2Cbcc9YB0BAgQIEJg3gUkF/m0ZbH1E7onJDkn90ZnVyROSpW4+JrfUovZHgAABAitaYFKB/35k6k/F7pfcK/n8IDdnutTt1Oxw9GNyV2TdPySfSnxMLggaAQIECBCYVmBSga99XJ28Z9qd3c7tmo/JNbt5VmZ+Ozm+WWFKgAABAgQITCcwqcC/NLs4YMxuTsy6+jv1S9nOys7uOrLDTbJc/asi/9HkwEQjQIAAAQIEphCYVOD/Jc//6mAfG2Raf9nu4OSTg3VLOani/d7k/Undlq/2lKR+s/5lSX0mXiNAgAABAgSmFJhU4M/NPirDrZb/JDlpeOUSzH8p+9gt+dvkrckLk8uSq5MLEo0AAQIECBBYgMCkAj9uN/fOyi3HPbAE6+ov5D07eXpSf3/+lGR9/EJfdqsRIECAAIH5FphU4OtKvQpu0+6YmR2T/ZsV62n6T9nvvyf1H818cz0dw24JECBAgMBcC0wq8Mdm5PXZ96bdlJm6RV//y9v6bhfnAL+5vg9i/wQIECBAYF4FJhX4+rvt/nb7vJ554yJAgACBuRaYVODbPiY3DPKoLFw7vMI8AQIECBAgMHuBSQX+y+neQUn9oZsvJj+f/FFSt+7rl+Cq/XTtxFcCBAgQIECgSwKTCnz9gt1rkn8edLj+Lv0ZyauTpf7f5AaHMCFAgAABAgSWQuAOE3ZSn0Gvj8UNt1/Kgj86MyxingABAgQIdFBg0hX8UenvCcnTkrp63y25V/LriUaAAAECBAh0WGDSFfyZ6ffDk3cn9RG5VyZV4E9PNAIECBAgQKDDApMKfD32guQlSf2f8BsnH0m2TTQCBAgQIECgwwKTCnwV919N6hZ9tc8mlyS1XiNAgAABAgQ6LDCpwO+Rfr85+e6g/zdmenhSRV8jQIAAAQIEOiwwqcBflH5XkR9uv5WFS4dXmCdAgAABAgS6JzDpt+jflu7Wb8/X++87JPV36VcnT0g0AgQIECBAoMMCkwp8/fetuyT7JfXb858f5OZMNQIECBAgQKDDApMK/OvT7+8nf93h/usaAQIECBAgMEZg0nvwF2T7hyQbjnmeVQQIECBAgECHBSZdwV+Xfu+T1K36+oW75tZ8/XW7P040AgQIECBAoKMCkwr8p9Lnb47p94/GrLOKAAECBAgQ6JDApAJft+grGgECBAgQINAzgXHvwdeV+9aDcdwx0x17NibdJUCAAAECK15gXIGv/zWu/u58td2TY9bM+UKAAAECBAj0RmBcge9N53WUAAECBAgQGC8w6T348c+wlsBsBLbMYX9uNodec1QvhmeI79AECCxcoK3A3zO72izZPtk02Slp2jWZuaxZMCWwTAIn5ThnLNOxRg9zp6x42OhKywQIEOiyQFuB/9pIp88fWv5w5p8+tGyWwHIInJuDPHM5DjTmGPVLp98as94qAgQIdFZgXIHfbh29vXUdj3uYAAECBAgQmLHAuALf/MW6GXfN4QkQIECAAIHFCvjFocXKeR4BAgQIEOiwgALf4ZOjawQIECBAYLECCvxi5TyPAAECBAh0WECB7/DJ0TUCBAgQILBYAQV+sXKeR4AAAQIEOiygwHf45OgaAQIECBBYrIACv1g5zyNAgAABAh0WUOA7fHJ0jQABAgQILFZAgV+snOcRIECAAIEOCyjwHT45ukaAAAECBBYroMAvVs7zCBAgQIBAhwUU+A6fHF0jQIAAAQKLFVDgFyvneQQIECBAoMMCCnyHT46uESBAgACBxQoo8IuV8zwCBAgQINBhgXH/H3yHu6trBAisUIFdM+6jZzT2TXLcbyWvn9HxHZbAogQU+EWxeRIBAssssGmO98plPmZzuI0z85ZmwZRAXwQU+L6cKf0ksLIFbs3wL5wRwdY57s0zOrbDEli0gPfgF03niQQIECBAoLsCCnx3z42eESBAgACBRQso8Ium80QCBAgQINBdAQW+u+dGzwgQIECAwKIFFPhF03kiAQIECBDoroAC391zo2cECBAgQGDRAgr8ouk8kQABAgQIdFdAge/uudEzAgQIECCwaIEuFvj64zt3WfSIPJEAAQIECBBY1ZUCX3/ruf7O80XJDcnlyTXJ6cmBiUaAAAECBAgsQKArf6r2iPR5+2Tv5NykivsWyS7J4clmyZGJRoAAAQIECEwh0JUr+D3T1xcm9T82XZ3U352+Kjk5OTh5SqIRIECAAAECUwp0pcDXrfjHt/R5n6z/YctjVhMgQIAAAQJjBLpyi/7V6dsxySHJOcmPky2TByXVx70SjQABAgQIEJhSoCsF/tT0d9fkkcnqpN6Pr6v2et/9C0ndstcIECBAgACBKQW6UuCru9cnn0uqT5snVyQaAQIECBAgsAiBrrwH72Nyizh5nkKAAAECBNoEunIFv1Qfk3tOBvo7LYPdIetPaXnMagIECBAgQGA9CJyXfdb77uPaI7LyhHEPjFlXdwLu3JIDsv7FY55jVT8Ejp1hN7fOsS92/JkJdMF/lt9/M4N34H4LdOUW/VJ9TK7+Cl59jn5c6j3+W/p9uvSeAAECBAhMJ9CVW/Q+Jjfd+bIVAQIECBCYSqArBX7Sx+S+lJF0pZ9TodqIAAECBAjMWqArhXPHQLwueVpSf572D5Kzk2rPSGr902tBI0CAAAECBNYt0JX34Osv2F2a7JZUga8/bnP/RCNAgAABAgQWIdCVK/j6U7T1l+yuS+r9+O8k9Zvzv5JoBAgQIECAwAIFunIFXwW9rt6b9sHM1Gfjj0+2aVaaEiBAgAABAtMJdKXAvzPd/XDysqFuvzXz9dnTtw2tM0uAAAECBAhMIdCVW/Qnpq87J/cZ6fOhWf784LGRhywSIECAAAECbQJdKfDVv2uS08Z09KSsq2gECBAgQIDAlAJduUU/ZXdtRoAAAQIECEwjoMBPo2QbAgQIECDQMwEFvmcnTHcJECBAgMA0Agr8NEq2IUCAAAECPRNQ4Ht2wnSXAAECBAhMI6DAT6NkGwIECBAg0DMBBb5nJ0x3CRAgQIDANAIK/DRKtiFAgAABAj0TUOB7dsJ0lwABAgQITCOgwE+jZBsCBAgQINAzAQW+ZydMdwkQIECAwDQCCvw0SrYhQIAAAQI9E1Dge3bCdJcAAQIECEwjoMBPo2QbAgQIECDQMwEFvmcnTHcJECBAgMA0Agr8NEq2IUCAAAECPRNQ4Ht2wnSXAAECBAhMI6DAT6NkGwIECBAg0DMBBb5nJ0x3CRAgQIDANAIK/DRKtiFAgAABAj0TUOB7dsJ0lwABAgQITCOgwE+jZBsCBAgQINAzgY161l/dnZ3APXPou87u8Ks2nuGxHZoAAQK9E1Dge3fKZtbhE3Pkyiza5jno7rM4sGMSIECgrwIKfF/P3PL3+4wc8iXLf9g1R9w6X580o2M7LAECBHop4D34Xp42nSZAgAABApMFFPjJPh4lQIAAAQK9FFDge3nadJoAAQIECEwW8B78ZB+PEiBAoAS2TJ46Q4pTc+zzZ3h8h+6hgALfw5OmywQILLvAI3PEf132o6494F0yeUXikyQzOgF9PawC39czp98ECCynwBU52NuX84BDx6pPkTx0aNksgakEvAc/FZONCBAgQIBAvwQU+H6dL70lQIAAAQJTCSjwUzHZiAABAgQI9EtAge/X+dJbAgQIECAwlYACPxWTjQgQIECAQL8EFPh+nS+9JUCAAAECUwko8FMx2YgAAQIECPRLQIHv1/nSWwIECBAgMJWAAj8Vk40IECBAgEC/BBT4fp0vvSVAgAABAlMJKPBTMdmIAAECBAj0S0CB79f50lsCBAgQIDCVgAI/FZONCBAgQIBAvwQU+H6dL70lQIAAAQJTCSjwUzHZiAABAgQI9EtAge/X+dJbAgQIECAwlYACPxWTjQgQIECAQL8EFPh+nS+9JUCAAAECUwko8FMx2YgAAQIECPRLQIHv1/nSWwIECBAgMJWAAj8Vk40IECBAgEC/BDbqV3f1lgABAitSYJeM+ogZjbzqxDeSd83o+A67SAEFfpFwM3jafXPM7Wdw3OaQmzYzpgQILLvAljnirArsxjn2a2d4/BxaW4yAAr8Ytdk855M57Idmc+hV9cNl9xkd22EJEFi16pYgnD4jiK1z3JtmdGyHvR0CCvztwFvmp56W471qmY/ZHK7+gT+tWTAlQIAAge4L+CW77p8jPSRAgAABAgsWUOAXTOYJBAgQIECg+wJdvEVffdo8uaJjfMenP/U+2CzaZjnoTrM4sGMSIECAQD8FulLgNwnfa5MDknskGyTXJuclb0nel8y6XZ8OPGtGnbhTjnvqjI7tsAQIEKhaMctP8VyV41/nNCxMoCsFvj7fWd88eyfnJtckWyT12c/Dk7qCPTKZZbs1B5/Vb5LWsetFT70QmkWrt3Icn7/vv1n861u1qgv//h6bof/f2Qx/VV3g3C/5txkdv+pkXWDN6mOKix52Vwr8nhnBI5PvDY2kXrGdnBycHJpMU+BfkO2emYxrd8nK2/MNslWe//FxO16Gdc3vSjj+MmCPOQT/tSi+/8Z8cyzDqi58/9VFV/0MnEWr8d8t+cVZHDzHrONvk/SuwM/I6zaHrR8c+99m7doVf5XJ+1ses5oAAQIECBAYI1C3XbvQdk0njkl+kpyT/DjZMnlQUncZ9kouSDQCBAgQIEBgCoGuFPjqar3PXrfpVyf1fvwPk7OSLyT1HrRGgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAvMv0KXPwXdd++J08Oyud3I99u/+2feZ63H/Xd+18Tv/vv+7/q90/fVv2+z6wetv9/Y8a4GTZt2BGR/f+Gd8AmZ8eOd/xidgxod3/md8AhZz+OY/MVjMcz2HAAECBAgQ6KiAAt/RE6NbBAgQIEDg9ggo8LdHz3MJECBAgEBHBRT4jp4Y3SJAgAABArdHQIG/PXqeS4AAAQIEOiqgwHf0xOgWAQIECBAgsDwCOyzPYTp7FOPv7KlZlo45/8vC3NmDOP+dPTU6RoAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECMyDwEYZxAbzMJBFjsH4nX/f/4v8x+NpBAh0V2DHdO2SZOehLt4l8/+UnJWcljwqmdc2bvy7ZLAfSL6ZfCbZL5nXNm78zVi3yMwFyROaFXM4HTf++v7/YPKd5KvJ7ybz2saN/54Z7D8m30iOTx6bzFvbOAN6U/K1Qd6Q6SZJtZXw82/S+FfSz7+1Z3xOvz4v4zo7uSEZLvBV3F+Z1FXN45LvJXdM5q21jf/EDPTZg8HePdPvJ9sNludp0jb+ZozvzcwVybwW+LbxH5kxv26AcLdM/zPZdrA8T5O28b87g3zFYKC7ZXpOUne55qk9P4P5SFKFrvKxpNZVWwk//yaNf6X8/Ft7tuf0a71aPSG5f/KDZOekaT/OzNbNQqb1KveJQ8vzMNs2/vqPiZ6S1D/6ptWLoN9oFuZk2jb+Znhl8I7klOQJzco5mraNf8OM8fqk7l7Ui9rabh5b2/hrrB9NXjoY9AMyvSbZdLA8L5NfzkCGf+bVFfz7BoNbCT//2sa/Un7+zcv38VTjGC7wdXvqpyPP+kSWnzWybp4Wh8c/Oq5fy4ofJVuNPjBHy6Pjr6vWrydV5Oa1wA+fvuHx3yMP/DD5q+Tq5LrkBck8t+Hx1zh/Pqm7Fv+cXJg8J5nndqcMrt6K+u1kJf78Gx7/6Hnuxc+/elWiTSewTTarV+zDrX7I3Xl4xQqZv3/G+Y/Ji5MrV8iYa5jvSl6T1JXMSmvbZsB196rem673ovdN3pjM2xVshtTaHp1H6u25M5JLksclGyXz2OpORv2+xX8kxyYr7eff6PhD8LO2Un/+/QxgXmaGX8HXlepNIwOrW/m/ObJunhaHx9+M64GZ+W7y+82KOZ4Oj/8ZGee3kn0G+a9M6/cxVifz2obHvzqDvDWpW9NN+0pmVsr3fxXyq5JdB4Ovi6OmyA9Wzc2kilvdnfxkUvPVVtLPv3HjX6uwalWvfv65gm9O27qndaVaV+x19dK01Zm5sFlYAdP7ZIyfTl6XvHMFjHd4iJtnoW5N//kg9UuG+ye7JSuhXZpB3pz8ZGiwN2T+54aW53m2blFvmHxzMMhbMv16cu/B8rxM6oXMB5Ma69OSOsfVVsrPv7bxl8FK/vlX45+7NnwFU4N7T/L2pL4J6n2pulU3/EtnWZyrNjr+L2d0dVu2btU2aV7hz9XAB4MZHf/wGFfae/A19n9K6sVdtV2Sa5O6ZT+vbfT8/1sGut9gsFXYL0+q8M9Te0kGUy9idkiaf+PN25Ar4effpPGvtJ9/8/R9PXYso//AV2er05JLkrOTxyXz3IbHX79dWrdoR/OcOQYYHv/oMFdiga9iXuM+M7ksmedzn+Hd5lM09W/guKQKYOV5yby18zOg0X/jNeZqq5N5//l3fsY4bvwr8edfKFZm23ZlDtuoCawR2CZf6xbuSm31KYqV3Pz8W8ln39gJECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAgQIECBAgAABAitCYIOMcsOWkW6U9fW4RoAAAQIEVrTAkzL6X52hwC/k2Dck30p2nKIfd8g2H05ePmbbev4lyc6Dx3430zOTiwbLJgQIECBAYMUIfCQjPWCGo60Cf+6Ux39YtvticnkyWuCfl3VnJ/VioSnwmV21S6LAl4RGYB0C9epZI0CgmwKPTbeqYFcB/GiyfVLtz5M/WDO39ssrM3lhclDyxOSNSV3tVqvCeU7yzaSKZrX6d/+i5NSkrpBfkzQ/Cz6T+d9Lzkv+M3lU8tbkB8kHks2Tatsm1bcrk9r3Y5KFtufkCW9Par/DbZMsPD3ZK6n9awQIECBAYG4E7p2RXJU8N7lnUkXwhKTa4cmr1syt/XJEJlX0N00+nvz+YP6ZmVaR3j15YPL9ZHXy4uT0pNZXAT8zeX5S7fykjlPHfEtybXJYcvfki8nTkmp1nPcl9aLjwKReRFRbyBX82mesWvV3makXIuNavbDYeegBV/BDGGYJTBJoXrVP2sZjBAgsv8BTcsgqwn+fXJxUQd8zuVvS1n6aB25Mrklq/qnJMclXkyr0+yTXJVX4j0pq/b8nf58ckDStrqrrmB9K6pfc3pR8N/l88ohk62Sv5G+SegFwbFKPPzTRCBDoiIAC35EToRsERgR2yvJXhtadnfkfJXUlPW17QDasIt60/8hMXcXXvk9uVg7mh/dbxbpavRio+Z/UQtoNSRX8urq/Nfls8l+D3DfTRyUaAQIdEVDgO3IidIPAiMBlWd5laN0Oma8r5/OSW5K6Hd+0ej98XLsiK6vIN+3xmXlIUvt+cLNysG74F+NuGnps3GzdDai3D2pf1a9KXb2/N9EIEOiIgALfkROhGwRGBE7I8h5JFeL6d1q/+PbtpAprXYU/PNkgqeL6uKRpdXt+q8HCpzOtW/2bJ3dMjkrqyrv2vX+yZVIvGvZNvpxM2+pK/jPJi5Lq2/bJd5J6n3+01YuU4Rcqo49bJkBgPQnU7TaNAIHuCdTt9MOSusVet+arsNd76tXenzw3uSSp9ccnTatfhPvbpIr825Ldkrrqr+0+kNT7+q9Pah+1vq7WT0xq3ULaG7JxvUd/UHJz8ubkW0n9kt1wO3iw8MLhleYJECBAgMBKF6gX4du0ILTdmt8s22849JwtMr/J0HIzW+vryv72tOpD3UloWhX44dv9q7P8qubBJZjW3YCLlmA/dkGAAAECBAgsQKAK/OVJFfW7JE9O2l6I5KEFtd2z9dsTBX5BbDZeqQLDr/JXqoFxEyCwdAL1Mb0Lk/rN+3o74LSkPkq3FK3edqg7Gscl316KHdoHAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQGAdAv8N18T4CA/uzxMAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-8"/> </p>
+
+</body>
+
+</html>
+
