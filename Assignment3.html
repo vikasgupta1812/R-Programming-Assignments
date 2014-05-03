@@ -3015,11 +3015,9 @@ min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
         Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = &quot;character&quot;, 
         Hospital.Name = &quot;character&quot;))
 
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack &lt;- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)
-
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure &lt;- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure)
-
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia &lt;- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
+    df[, 11] &lt;- suppressWarnings(as.numeric(df[, 11]))
+    df[, 17] &lt;- suppressWarnings(as.numeric(df[, 17]))
+    df[, 23] &lt;- suppressWarnings(as.numeric(df[, 23]))
 
     outcomes &lt;- c(&quot;heart attack&quot;, &quot;heart failure&quot;, &quot;pneumonia&quot;)
 
@@ -3063,11 +3061,79 @@ min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
         return(df1[df1$rank == max(df1$rank), 1])
     } else if ((num &lt;= max(df1$rank)) | (num &gt;= min(df1$rank))) {
         return(df1[df1$rank == num, 1])
-    } else {
-        return(NA)
+    } else if ((num &gt; max(df1$rank)) | (num &lt; min(df1$rank))) {
+        NA
     }
-
 }
+</code></pre>
+
+<p>Unit tests</p>
+
+<pre><code class="r">rm(list = ls())
+rankhospital(&quot;TX&quot;, &quot;heart failure&quot;, 4)
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;rankhospital&quot;
+</code></pre>
+
+<pre><code class="r">rankhospital(&quot;MD&quot;, &quot;heart attack&quot;, &quot;worst&quot;)
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;rankhospital&quot;
+</code></pre>
+
+<pre><code class="r">rankhospital(&quot;MD&quot;, &quot;heart attack&quot;, &quot;best&quot;)
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;rankhospital&quot;
+</code></pre>
+
+<pre><code class="r">rankhospital(&quot;MN&quot;, &quot;heart attack&quot;, 5000)
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;rankhospital&quot;
+</code></pre>
+
+<pre><code class="r">rankhospital(&quot;WA&quot;, &quot;pneumonia&quot;, 1000)
+</code></pre>
+
+<pre><code>## Error: could not find function &quot;rankhospital&quot;
+</code></pre>
+
+<p>Submission</p>
+
+<pre><code class="r">rm(list = ls())
+source(&quot;http://d396qusza40orc.cloudfront.net/rprog%2Fscripts%2Fsubmitscript3.R&quot;)
+submit()
+</code></pre>
+
+<pre><code>## [1] &#39;best&#39; part 1
+## [2] &#39;best&#39; part 2
+## [3] &#39;best&#39; part 3
+## [4] &#39;rankhospital&#39; part 1
+## [5] &#39;rankhospital&#39; part 2
+## [6] &#39;rankhospital&#39; part 3
+## [7] &#39;rankhospital&#39; part 4
+## [8] &#39;rankall&#39; part 1
+## [9] &#39;rankall&#39; part 2
+## [10] &#39;rankall&#39; part 3
+## Which part are you submitting [1-10]?
+</code></pre>
+
+<pre><code>## Error: missing value where TRUE/FALSE needed
+</code></pre>
+
+<pre><code class="r">returnNA &lt;- function() {
+    return(NA)
+}
+
+returnNA()
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">`?`(return)
 </code></pre>
 
 <p>The function reads the outcome-of-care-measures.csv file</p>
@@ -3666,6 +3732,32 @@ if (num == &quot;best&quot;) {
 <pre><code>## [1] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack&quot; 
 ## [2] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure&quot;
 ## [3] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;
+</code></pre>
+
+<h1></h1>
+
+<p>Qustion#4
+##4 Ranking hospitals in all states</p>
+
+<p>Write a function called rankall that takes two arguments: an outcome name (outcome) and a hospital rank- ing (num). The function reads the outcome-of-care-measures.csv file and returns a 2-column data frame containing the hospital in each state that has the ranking specified in num. For example the function call rankall(&ldquo;heart attack&rdquo;, &ldquo;best&rdquo;) would return a data frame containing the names of the hospitals that are the best in their respective states for 30-day heart attack death rates. The function should return a value for every state (some may be NA). The first column in the data frame is named hospital, which contains the hospital name, and the second column is named state, which contains the 2-character abbreviation for the state name. Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.</p>
+
+<pre><code class="r">rm(list = ls())
+</code></pre>
+
+<pre><code class="r">rankall &lt;- function(outcome, num) {
+    outcomes &lt;- c(&quot;heart attack&quot;, &quot;heart failure&quot;, &quot;pneumonia&quot;)
+
+    if (!(outcome %in% outcomes)) {
+        stop(&quot;invalid outcome&quot;)
+    }
+
+    df &lt;- read.csv(&quot;./outcome-of-care-measures.csv&quot;, colClasses = c(Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack = &quot;character&quot;, 
+        Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure = &quot;character&quot;, 
+        Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = &quot;character&quot;, 
+        Hospital.Name = &quot;character&quot;))
+
+
+}
 </code></pre>
 
 </body>

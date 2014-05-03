@@ -3050,11 +3050,9 @@ rankhospital <- function(state, outcome, num) {
         Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = "character", 
         Hospital.Name = "character"))
     
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack <- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)
-    
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure <- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure)
-    
-    df$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia <- as.numeric(df$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
+    df[, 11] <- suppressWarnings(as.numeric(df[, 11]))
+    df[, 17] <- suppressWarnings(as.numeric(df[, 17]))
+    df[, 23] <- suppressWarnings(as.numeric(df[, 23]))
     
     outcomes <- c("heart attack", "heart failure", "pneumonia")
     
@@ -3098,12 +3096,105 @@ rankhospital <- function(state, outcome, num) {
         return(df1[df1$rank == max(df1$rank), 1])
     } else if ((num <= max(df1$rank)) | (num >= min(df1$rank))) {
         return(df1[df1$rank == num, 1])
-    } else {
-        return(NA)
+    } else if ((num > max(df1$rank)) | (num < min(df1$rank))) {
+        NA
     }
-    
 }
 ```
+
+
+
+Unit tests
+
+```r
+rm(list = ls())
+rankhospital("TX", "heart failure", 4)
+```
+
+```
+## Error: could not find function "rankhospital"
+```
+
+```r
+rankhospital("MD", "heart attack", "worst")
+```
+
+```
+## Error: could not find function "rankhospital"
+```
+
+```r
+rankhospital("MD", "heart attack", "best")
+```
+
+```
+## Error: could not find function "rankhospital"
+```
+
+```r
+rankhospital("MN", "heart attack", 5000)
+```
+
+```
+## Error: could not find function "rankhospital"
+```
+
+```r
+rankhospital("WA", "pneumonia", 1000)
+```
+
+```
+## Error: could not find function "rankhospital"
+```
+
+
+Submission
+
+```r
+rm(list = ls())
+source("http://d396qusza40orc.cloudfront.net/rprog%2Fscripts%2Fsubmitscript3.R")
+submit()
+```
+
+```
+## [1] 'best' part 1
+## [2] 'best' part 2
+## [3] 'best' part 3
+## [4] 'rankhospital' part 1
+## [5] 'rankhospital' part 2
+## [6] 'rankhospital' part 3
+## [7] 'rankhospital' part 4
+## [8] 'rankall' part 1
+## [9] 'rankall' part 2
+## [10] 'rankall' part 3
+## Which part are you submitting [1-10]?
+```
+
+```
+## Error: missing value where TRUE/FALSE needed
+```
+
+
+
+
+```r
+returnNA <- function() {
+    return(NA)
+}
+
+returnNA()
+```
+
+```
+## [1] NA
+```
+
+
+
+```r
+`?`(return)
+```
+
 
 
 
@@ -3798,6 +3889,41 @@ names(df)[grep("^Hospital.30.Day.Death..Mortality..Rates.from", names(df))]
 ## [3] "Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia"
 ```
 
+
+========================================================
+Qustion#4
+##4 Ranking hospitals in all states
+
+Write a function called rankall that takes two arguments: an outcome name (outcome) and a hospital rank- ing (num). The function reads the outcome-of-care-measures.csv file and returns a 2-column data frame containing the hospital in each state that has the ranking specified in num. For example the function call rankall("heart attack", "best") would return a data frame containing the names of the hospitals that are the best in their respective states for 30-day heart attack death rates. The function should return a value for every state (some may be NA). The first column in the data frame is named hospital, which contains the hospital name, and the second column is named state, which contains the 2-character abbreviation for the state name. Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.
+
+
+
+
+
+```r
+rm(list = ls())
+```
+
+
+
+
+
+```r
+rankall <- function(outcome, num) {
+    outcomes <- c("heart attack", "heart failure", "pneumonia")
+    
+    if (!(outcome %in% outcomes)) {
+        stop("invalid outcome")
+    }
+    
+    df <- read.csv("./outcome-of-care-measures.csv", colClasses = c(Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack = "character", 
+        Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure = "character", 
+        Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = "character", 
+        Hospital.Name = "character"))
+    
+    
+}
+```
 
 
 
