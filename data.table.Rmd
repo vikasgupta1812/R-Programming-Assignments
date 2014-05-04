@@ -278,3 +278,193 @@ a[b,]
 
 
 TODO:http://stackoverflow.com/questions/12773822/why-does-xy-join-of-data-tables-not-allow-a-full-outer-join-or-a-left-join
+
+
+
+
+
+
+
+================================================
+
+```{r}
+require(data.table)
+
+```
+
+
+```{r}
+# create a regular data.frame
+theDF <- data.frame(A=1:10,
+                     B=letters[1:10],
+                     C=LETTERS[11:20],
+                     D=rep(c("One", "Two", "Three"), length.out=10))
+theDF
+```
+
+```{r}
+# create a data.table
+theDT <- data.table(A=1:10,
+                     B=letters[1:10],
+                     C=LETTERS[11:20],
+                     D=rep(c("One", "Two", "Three"), length.out=10))
+ # print them and compare
+ theDF
+```
+
+Multiple columns in a data.frame should be specified as a character vector. With data.tables the columns should be specified as a list of the actual names, not as characters.
+
+```{r}
+theDT[, list(A, C)] 
+```
+
+
+```{r}
+# just one column
+theDT[, B]
+```
+
+one column while maintaining data.table structure
+```{r}
+theDT[, list(B)]
+```
+
+If we must specify the column names as characters (perhaps because they were passed as arguments to a function), the with argument should be set to FALSE.
+
+
+```{r}
+theDT[, "B", with = FALSE]
+```
+
+```{r}
+theDT[, c("A", "C"), with = FALSE]
+```
+
+This time we used a vector to hold the column names instead of a list. These nuances are important to proper functions of data.tables but can lead to a great deal of frustration.
+
+##Keys
+
+show tables
+```{r}
+tables()
+```
+The key is used to index the data.table and will provide the extra speed.
+
+set the key
+
+```{r}
+setkey(theDT, D)
+```
+
+show the data.table again
+
+```{r}
+theDT
+```
+
+The data have been reordered according to column D, which is sorted alphabetically.
+
+
+```{r}
+key(theDT)
+```
+
+```{r}
+tables()
+```
+
+
+This adds some new functionality to selecting rows from data.tables. In addition to selecting rows by the row number or by some expression that evaluates to TRUE or FALSE, a value of the key column can be specified.
+
+
+
+```{r}
+theDT["One", ]
+```
+
+
+```{r}
+theDT[c("One", "Two"), ]
+```
+
+More than one column can be set as the key.
+
+```{r}
+#install.packages("ggplot2")
+require(ggplot2)
+data(diamonds)
+diamondsDT <- data.table(diamonds)
+setkey(diamondsDT, cut, color)
+```
+
+
+```{r}
+head(diamondsDT)
+```
+
+
+To access rows according to both keys, there is a special function named J. It takes multiple arguments, each of which is a vector of values to select.
+
+```{r}
+diamondsDT[J("Ideal", "E"), ]
+```
+
+```{r}
+diamondsDT[J("Ideal", c("E", "D")), ]
+```
+
+
+##data.table Aggregation
+
+The primary benefit of indexing is faster aggregation. While aggregate and the various d*ply functions will work because data.tables are just enhanced data.frames, they will be slower than using the built-in aggregation functionality of data.table.
+
+
+
+we calculate the mean price of diamonds for each type of cut.
+```{r}
+aggregate(price ~ cut,  diamonds, mean)
+```
+
+To get the same result using data.table, we do this:
+
+
+```{r}
+diamondsDT[, mean(price), by = cut]
+```
+The only difference between this and the previous result is that the columns have different names. To specify the name of the resulting column, pass the aggregation function as a named list.
+
+
+```{r}
+diamondsDT[, list(price = mean(price)), by = cut]
+```
+
+
+To aggregate on multiple columns, specify them as a list().
+
+
+```{r}
+diamondsDT[, mean(price), by = list(cut, color)]
+```
+
+To aggregate multiple arguments, pass them as a list. Unlike with aggregate, a different metric can be measured for each column.
+
+
+```{r}
+diamondsDT[, list(price = mean(price), carat = mean(carat)), by = cut]
+```
+
+
+
+
+```{r}
+diamondsDT[, list(price = mean(price), carat = mean(carat), caratSum = sum(carat)), by = cut]
+```
+
+Finally, both multiple metrics can be calculated and multiple grouping variables can be specified at the same time.
+
+
+```{r}
+diamondsDT[, list(price = mean(price), carat = mean(carat)), by = list(cut, color)]
+```
+
+
