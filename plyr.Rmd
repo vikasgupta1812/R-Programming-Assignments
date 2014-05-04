@@ -1,0 +1,104 @@
+plyr
+========================================================
+It epitomizes the “split-apply-combine” method of data manipulation. The core of plyr consists of functions such as ddply, llply and ldply. All of the manipulation functions consist of five letters, with the last three always being ply. The first letter indicates the type of input and the second letter indicates the type of output. For instance, ddply takes in a data.frame and outputs a data.frame, llply takes in a list and outputs a list and ldply takes in a list and outputs a data.frame.
+
+
+ddply
+
+ddply takes a data.frame, splits it according to some variable(s), performs a desired action on it and returns a data.frame. To learn about ddply we look at the baseball data that come with plyr.
+
+
+```{r}
+require(plyr)
+```
+
+```{r}
+head(baseball)
+```
+
+A common statistic in baseball is On Base Percentage (OBP), which is calculated as
+
+
+(H + BB + HBP)/(AB + BB + HBP + SF)
+
+
+where
+H = Hits
+BB = Bases on Balls (Walks)
+HBP = Times Hit by Pitch
+AB = At Bats
+SF = Sacrifice Flies
+
+
+
+Before 1954 sacrifice flies were counted as part of sacrifice hits, which includes bunts, so for players before 1954 sacrifice flies should be assumed to be 0. That will be the first change we make to the data. There are many instances of HBP (hit by pitch) that are NA, so we set those to 0 as well. We also exclude players with less than 50 at bats in a season.
+
+
+
+subsetting with [ is faster than using ifelse
+
+```{r}
+baseball$sf[baseball$year < 1954] <- 0
+```
+
+
+check that it worked
+
+```{r}
+any(is.na(baseball$sf))
+```
+
+set NA hbp's to 0
+
+```{r}
+baseball$hbp[is.na(baseball$hbp)] <- 0
+```
+only keep players with at least 50 at bats in a season
+
+```{r}
+baseball <- baseball[baseball$ab >= 50, ]
+```
+
+Calculating the OBP for a given player in a given year is easy enough with just vector operations.
+
+
+
+```{r}
+baseball$OBP <- with(baseball, (h + bb + hbp)/(ab + bb + hbp + sf))
+tail(baseball)
+```
+
+Here we used a new function, with. This allows us to specify the columns of a data.frame without having to specify the data.frame name each time.
+
+
+To calculate the OBP for a player’s entire career we cannot just average his individual season OBPs; we need to calculate and sum the numerator, and then divide by the sum of the denominator. This requires the use of ddply.
+
+First we make a function to do that calculation, then we use ddply to run that calculation for each player.
+
+# this function assumes that the column names for the data are as
+# below
+
+```{r}
+obp <- function(data)
+ {
+     c(OBP = with(data, sum(h + bb + hbp)/sum(ab + bb + hbp + sf)))
+ }
+
+```
+
+
+use ddply to calculate career OBP for each player
+
+
+```{r}
+careerOBP <- ddply(baseball, .variables = "id", .fun = obp)
+```
+
+sort the results by OBP
+
+```{r}
+careerOBP <- careerOBP[order(careerOBP$OBP, decreasing = TRUE), ]
+```
+
+
+
