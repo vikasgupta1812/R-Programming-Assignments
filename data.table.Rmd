@@ -1,0 +1,280 @@
+Title
+========================================================
+
+
+```{r}
+library(data.table)
+```
+
+```{r}
+?data.table
+```
+
+```{r}
+df  <- data.frame(x = c("b","b","b","a","a"),v=rnorm(5))
+df
+```
+
+
+```{r}
+dt  <- data.table(x = c("b","b","b","a","a"),v=rnorm(5))
+dt 
+```
+
+```{r}
+CARS  <- data.table(cars)
+head(CARS)
+```
+
+```{r}
+tables()
+```
+
+
+```{r}
+dt
+```
+
+
+```{r}
+dt[2,]
+```
+
+
+
+```{r}
+dt[dt$x == "b",]
+```
+
+
+
+```{r}
+dt["b",]
+```
+
+
+```{r}
+setkey(dt,x)
+```
+
+```{r}
+dt
+```
+
+
+```{r}
+haskey(dt)
+```
+
+```{r}
+key(dt)
+```
+
+
+
+```{r}
+dt["b",]
+```
+
+```{r}
+dt["b",mult="first"]
+```
+
+```{r}
+dt["b",mult="last"]
+```
+
+
+```{r}
+dt["b"]
+```
+
+
+```{r}
+grpsize  <- ceiling(1e7/26^2)
+grpsize
+```
+
+
+```{r}
+tt = system.time(df  <- data.frame(
+  x = rep(LETTERS, each=26*grpsize),
+  y = rep(letters, each=grpsize),
+  v = runif(grpsize*26^2),
+  stringsAsFactors=F
+  ))
+tt
+```
+
+
+```{r}
+head(df,3)
+```
+
+
+
+
+```{r}
+tail(df,3)
+```
+
+
+
+```{r}
+dim(df)
+```
+
+Extract arbitrary group from df
+
+
+```{r}
+tt = system.time(
+  ans1  <- df[df$x == "R" & df$y == "h",]
+  )
+tt
+```
+
+```{r}
+head(ans1,3)
+```
+
+```{r}
+dim(ans1)
+```
+Convert to data.table 
+
+```{r}
+dt  <- as.data.table(df)
+system.time(setkey(dt,x,y))
+```
+
+Binary search
+```{r}
+ss = system.time(
+  ans2  <- dt[J("R","h")]
+  )
+ss
+#tt
+```
+
+vector scan
+
+```{r}
+system.time(
+  ans1  <- dt[x == "R" & y == "h",]  
+  )
+```
+
+```{r}
+system.time(
+  ans2  <- df[df$x == "R" & df$y == "h",]  
+  )
+```
+
+```{r}
+identical(
+  dt[J("R","h"),],
+  dt[data.table("R","h"),]
+  )
+```
+
+Fast grouping 
+
+
+```{r}
+head(dt)
+dt[,sum(v)]
+```
+When we supply a j expression and a ’by’ list of expressions, the j expression is repeated for each ’by’ group:
+
+
+```{r}
+dt[,sum(v),by=x]
+```
+The by in data.table is fast. Let’s compare it to tapply.
+
+
+```{r}
+ttt=system.time(tt <- tapply(dt$v,dt$x,sum)); ttt
+```
+
+```{r}
+sss=system.time(ss <- dt[,sum(v),by=x]); sss
+```
+
+```{r}
+head(tt)
+```
+
+```{r}
+head(ss)
+```
+
+```{r}
+as.vector(tt)
+```
+
+```{r}
+ss$V1
+```
+
+
+```{r}
+identical(as.vector(tt), ss$V1)
+```
+
+Next, let’s group by two columns:
+
+
+```{r}
+ttt=system.time(tt <- tapply(dt$v,list(dt$x,dt$y),sum)); ttt
+```
+
+
+```{r}
+sss=system.time(ss <- dt[,sum(v),by="x,y"]); sss
+```
+
+
+```{r}
+tt[1:5,1:5]
+```
+
+```{r}
+head(ss)
+```
+
+
+```{r}
+identical(
+  as.vector(t(tt)),
+  ss$V1
+  )
+
+
+```
+
+
+t(tt)
+
+
+==========================================================
+http://stackoverflow.com/questions/13493124/outer-join-data-table-r
+
+```{r}
+a <- data.table(a=c(1,2,3),b=c(3,4,5)); a
+b <- data.table(a=c(1,2),k=c(1,2)); b
+setkey(a,a)
+setkey(b,a)
+
+key(a)
+key(b)
+```
+
+```{r}
+b[a,]
+a[b,]
+```
+
+
+TODO:http://stackoverflow.com/questions/12773822/why-does-xy-join-of-data-tables-not-allow-a-full-outer-join-or-a-left-join
