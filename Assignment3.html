@@ -198,13 +198,17 @@ if (!file.exists(&quot;Assignment3-data.zip&quot;)) {
 }
 </code></pre>
 
+<p>Get current working directory</p>
+
 <pre><code class="r">getwd()
 </code></pre>
 
 <pre><code>## [1] &quot;/Users/Vikas/share/rprog&quot;
 </code></pre>
 
-<p>1 Plot the 30-day mortality rates for heart attack</p>
+<p>1- Plot the 30-day mortality rates for heart attack</p>
+
+<p>read file</p>
 
 <pre><code class="r">outcome &lt;- read.csv(&quot;outcome-of-care-measures.csv&quot;, colClasses = &quot;character&quot;)
 head(outcome)
@@ -493,6 +497,8 @@ head(outcome)
 <pre><code>## [1] 46
 </code></pre>
 
+<p>Names of columns</p>
+
 <pre><code class="r">names(outcome)
 </code></pre>
 
@@ -544,7 +550,7 @@ head(outcome)
 ## [46] &quot;Footnote...Hospital.30.Day.Readmission.Rates.from.Pneumonia&quot;
 </code></pre>
 
-<p>To make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset), run</p>
+<p>Make a simple histogram of the 30-day death rates from heart attack (column 11 in the outcome dataset)</p>
 
 <pre><code class="r">names(outcome)[11]
 </code></pre>
@@ -561,14 +567,20 @@ head(outcome)
 <pre><code class="r">## You may get a warning about NAs being introduced; that is okay
 </code></pre>
 
+<p>histogram</p>
+
 <pre><code class="r">hist(outcome[, 11])
 </code></pre>
 
 <p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-8"/> </p>
 
-<p>##2 Finding the best hospital in a state</p>
+<h1>##2 Finding the best hospital in a state</h1>
 
-<p>Write a function called best that take two arguments: the 2-character abbreviated name of a state and an outcome name. The function reads the outcome-of-care-measures.csv file and returns a character vector with the name of the hospital that has the best (i.e. lowest) 30-day mortality for the specified outcome in that state. The hospital name is the name provided in the Hospital.Name variable. The outcomes can be one of “heart attack”, “heart failure”, or “pneumonia”. Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.</p>
+<p>Write a function called best that take two arguments: the 2-character abbreviated name of a state and an outcome name. The function reads the outcome-of-care-measures.csv file and returns a character vector with the name of the hospital that has the best (i.e. lowest) 30-day mortality for the specified outcome in that state. The hospital name is the name provided in the Hospital.Name variable. </p>
+
+<p>The outcomes can be one of “heart attack”, “heart failure”, or “pneumonia”. </p>
+
+<p>Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.</p>
 
 <pre><code class="r">best &lt;- function(state, outcome) {
     ## Read outcome data
@@ -576,6 +588,10 @@ head(outcome)
         Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure = &quot;character&quot;, 
         Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = &quot;character&quot;, 
         Hospital.Name = &quot;character&quot;))
+    suppressWarnings(class(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack) &lt;- &quot;numeric&quot;)
+    suppressWarnings(class(df$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure) &lt;- &quot;numeric&quot;)
+    suppressWarnings(class(df$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia) &lt;- &quot;numeric&quot;)
+
     ## Check that state and outome are valid
     outcomes &lt;- c(&quot;heart attack&quot;, &quot;heart failure&quot;, &quot;pneumonia&quot;)
     if (!(state %in% df$State)) {
@@ -587,82 +603,78 @@ head(outcome)
     }
 
     ## Return hospital name in that state with lowest 30-day death rate
-    df1 &lt;- df[df$State == state, ]
+    df1 &lt;- df[df$State == state, ]  # Subset of data for specific state.
     if (outcome == &quot;heart attack&quot;) {
         return(min(df1[df1$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack == 
             min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack, 
-                na.rm = T), 2]))
-    }
-
-    if (outcome == &quot;heart failure&quot;) {
+                na.rm = T), 2], na.rm = T))
+    } else if (outcome == &quot;heart failure&quot;) {
         return(min(df1[df1$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure == 
             min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure, 
-                na.rm = T), 2]))
-    }
-
-    if (outcome == &quot;pneumonia&quot;) {
+                na.rm = T), 2], na.rm = T))
+    } else if (outcome == &quot;pneumonia&quot;) {
         return(min(df1[df1$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia == 
             min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia, 
-                na.rm = T), 2]))
+                na.rm = T), 2], na.rm = T))
     }
-
 }
 </code></pre>
 
 <p>Unit tests</p>
 
-<pre><code class="r">best(&quot;TX&quot;, &quot;heart attack&quot;)
+<pre><code class="r">rm(list = ls())
+best(&quot;TX&quot;, &quot;heart attack&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;CYPRESS FAIRBANKS MEDICAL CENTER&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;TX&quot;, &quot;heart failure&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;HARRIS COUNTY HOSPITAL DISTRICT&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;MD&quot;, &quot;heart attack&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;JOHNS HOPKINS HOSPITAL, THE&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;MD&quot;, &quot;pneumonia&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;CALVERT MEMORIAL HOSPITAL&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;BB&quot;, &quot;heart attack&quot;)
 </code></pre>
 
-<pre><code>## Error: invalid state
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;NY&quot;, &quot;hert attack&quot;)
 </code></pre>
 
-<pre><code>## Error: invalid outcome
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;SC&quot;, &quot;heart attack&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;MUSC MEDICAL CENTER&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
-<pre><code class="r">best(&quot;NY&quot;, &quot;pneumonia&quot;)
+<pre><code class="r">best(&quot;NY&quot;, &quot;pneumonia&quot;)  # [1] &#39;ALBANY MEDICAL CENTER HOSPITAL&#39;  ## Incorrect results
 </code></pre>
 
-<pre><code>## [1] &quot;ALBANY MEDICAL CENTER HOSPITAL&quot;
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <pre><code class="r">best(&quot;NN&quot;, &quot;pneumonia&quot;)
 </code></pre>
 
-<pre><code>## Error: invalid state
+<pre><code>## Error: could not find function &quot;best&quot;
 </code></pre>
 
 <p>Submission </p>
@@ -2998,10 +3010,9 @@ min(df1$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)
 <pre><code>## [1] 3
 </code></pre>
 
-<h1></h1>
+<h1>Question#3</h1>
 
-<p>Question#3
-##Ranking hospitals by outcome in a state</p>
+<p>##Ranking hospitals by outcome in a state</p>
 
 <p>Write a function called rankhospital that takes three arguments: the 2-character abbreviated name of a state (state), an outcome (outcome), and the ranking of a hospital in that state for that outcome (num). The function reads the outcome-of-care-measures.csv file and returns a character vector with the name of the hospital that has the ranking specified by the num argument. For example, the call</p>
 
@@ -3734,12 +3745,13 @@ if (num == &quot;best&quot;) {
 ## [3] &quot;Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia&quot;
 </code></pre>
 
-<h1></h1>
+<h1>Question#4</h1>
 
-<p>Question#4
-##4 Ranking hospitals in all states</p>
+<p>##4 Ranking hospitals in all states</p>
 
-<p>Write a function called rankall that takes two arguments: an outcome name (outcome) and a hospital rank- ing (num). The function reads the outcome-of-care-measures.csv file and returns a 2-column data frame containing the hospital in each state that has the ranking specified in num. For example the function call rankall(&ldquo;heart attack&rdquo;, &ldquo;best&rdquo;) would return a data frame containing the names of the hospitals that are the best in their respective states for 30-day heart attack death rates. The function should return a value for every state (some may be NA). The first column in the data frame is named hospital, which contains the hospital name, and the second column is named state, which contains the 2-character abbreviation for the state name. Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.</p>
+<p>Write a function called rankall that takes two arguments: an outcome name (outcome) and a hospital rank-ing (num). The function reads the outcome-of-care-measures.csv file and returns a 2-column data frame containing the hospital in each state that has the ranking specified in num. For example the function call rankall(&ldquo;heart attack&rdquo;, &ldquo;best&rdquo;) would return a data frame containing the names of the hospitals that are the best in their respective states for 30-day heart attack death rates. The function should return a value for every state (some may be NA). The first column in the data frame is named hospital, which contains the hospital name, and the second column is named state, which contains the 2-character abbreviation for the state name. Hospitals that do not have data on a particular outcome should be excluded from the set of hospitals when deciding the rankings.</p>
+
+<p>Reset everything</p>
 
 <pre><code class="r">rm(list = ls())
 </code></pre>
@@ -3756,74 +3768,485 @@ if (num == &quot;best&quot;) {
         Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = &quot;character&quot;, 
         Hospital.Name = &quot;character&quot;))
 
+    # convert ratings to numeric
     df[, 11] &lt;- suppressWarnings(as.numeric(df[, 11]))
     df[, 17] &lt;- suppressWarnings(as.numeric(df[, 17]))
     df[, 23] &lt;- suppressWarnings(as.numeric(df[, 23]))
 
+    # Create a subset dataframe for given outcome
     if (outcome == &quot;heart attack&quot;) {
         df1 &lt;- df[, c(2, 7, 11)]
-        names(df1)[3] &lt;- &quot;Rate&quot;
     } else if (outcome == &quot;heart failure&quot;) {
         df1 &lt;- df[, c(2, 7, 17)]
-        names(df1)[3] &lt;- &quot;Rate&quot;
     } else if (outcome == &quot;pneumonia&quot;) {
         df1 &lt;- df[, c(2, 7, 23)]
-        names(df1)[3] &lt;- &quot;Rate&quot;
     }
+
+    # Rename Column name of Hospital name to Hospital
+    names(df1)[1] &lt;- &quot;hospital&quot;
+    names(df1)[2] &lt;- &quot;state&quot;
+    names(df1)[3] &lt;- &quot;Rate&quot;
 
     # Remove rows where Ratings are not known.
     df1 &lt;- df1[!is.na(df1$Rate), ]
-    head(df1)
-    # Order the dataframe by Names to help in Ranking
-    df1 &lt;- df1[order(df1[1], df1[2]), ]
-    # head(df1) tail(df1)
+    # head(df1)
 
     library(data.table)
-    dt &lt;- as.data.table(df1[, c(&quot;Hospital.Name&quot;, &quot;State&quot;, &quot;Rate&quot;)])
-    head(dt)
-    dt1 &lt;- dt[, list(rank = rank(Rate, ties.method = &quot;first&quot;)), by = State]
-    dt$rank &lt;- dt1$rank
-    head(dt)
-    setkey(dt, State, rank)
-    head(dt)
-    rm(dt1)
+    dt &lt;- as.data.table(df1[, c(&quot;hospital&quot;, &quot;state&quot;, &quot;Rate&quot;)])
+    # head(dt) Add ranking to the table
+    dt1 &lt;- dt[, list(hospital, rank = rank(Rate, ties.method = &quot;first&quot;)), by = state]
 
-    ## Worst Ranks
-    dt1 &lt;- dt[, list(rank = max(rank)), by = State]
-    dt1
-    head(dt1)
-    setkey(dt1, State, rank)
-    key(dt1)
-    key(dt)
-    dt[dt1, ]
-    # dt[dt1,Hospital.Name,State]
-    dt[dt1, State, Hospital.Name]
-    dt[dt1, Hospital.Name, dt1$State]
-    ## 
-    rm(dt1)
-    num = 4
-    dt1 &lt;- dt[, list(rank = num), by = State]
-    # dt1
-    setkey(dt1, State, rank)
-    # dt[dt1,State,Hospital.Name] dt[dt1,Hospital.Name,dt1$State] #12 is not
-    # missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
-    ## 
-    rm(dt1)
-    num = 10
-    dt1
-    dt1 &lt;- dt[, list(rank = num), by = State]
-    setkey(dt1, State, rank)
-    # dt[dt1,Hospital.Name,dt1$State] #12 is not missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
-    ## 
-    rm(dt1)
-    num = 1
-    dt1 &lt;- dt[, list(rank = num), by = State]
-    setkey(dt1, State, rank)
-    # dt[dt1,Hospital.Name,dt1$State] #12 is not missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+    # =======================
+    if (num == &quot;best&quot;) {
+        dt2 &lt;- dt1[, list(rank = 1), by = state]
+    } else if (num == &quot;worst&quot;) {
+        dt2 &lt;- dt1[, list(rank = max(rank)), by = state]
+    } else {
+        dt2 &lt;- dt1[, list(rank = num), by = state]
+    }
+    # =======================
+    setkey(dt2, state, rank)
+    setkey(dt1, state, rank)
+    return(as.data.frame(dt1[dt2, ][, list(hospital, state, rank)]))
 }
+</code></pre>
+
+<p>Unit tests</p>
+
+<pre><code class="r">rm(list = ls())
+source(&quot;./rankall.R&quot;)
+head(rankall(&quot;heart attack&quot;, 20), 10)
+</code></pre>
+
+<pre><code>##                               hospital state
+## 1                                 &lt;NA&gt;    AK
+## 2       D W MCMILLAN MEMORIAL HOSPITAL    AL
+## 3    ARKANSAS METHODIST MEDICAL CENTER    AR
+## 4  JOHN C LINCOLN DEER VALLEY HOSPITAL    AZ
+## 5                SHERMAN OAKS HOSPITAL    CA
+## 6             SKY RIDGE MEDICAL CENTER    CO
+## 7           ROCKVILLE GENERAL HOSPITAL    CT
+## 8                                 &lt;NA&gt;    DC
+## 9                                 &lt;NA&gt;    DE
+## 10                DOCTORS HOSPITAL INC    FL
+</code></pre>
+
+<pre><code class="r">tail(rankall(&quot;pneumonia&quot;, &quot;worst&quot;), 3)
+</code></pre>
+
+<pre><code>##                                      hospital state
+## 52 MAYO CLINIC HEALTH SYSTEM - NORTHLAND, INC    WI
+## 53                     PLATEAU MEDICAL CENTER    WV
+## 54           NORTH BIG HORN HOSPITAL DISTRICT    WY
+</code></pre>
+
+<pre><code class="r">tail(rankall(&quot;heart failure&quot;), 10)
+</code></pre>
+
+<pre><code>##                                                             hospital state
+## 45                         WELLMONT HAWKINS COUNTY MEMORIAL HOSPITAL    TN
+## 46                                        FORT DUNCAN MEDICAL CENTER    TX
+## 47 VA SALT LAKE CITY HEALTHCARE - GEORGE E. WAHLEN VA MEDICAL CENTER    UT
+## 48                                          SENTARA POTOMAC HOSPITAL    VA
+## 49                            GOV JUAN F LUIS HOSPITAL &amp; MEDICAL CTR    VI
+## 50                                              SPRINGFIELD HOSPITAL    VT
+## 51                                         HARBORVIEW MEDICAL CENTER    WA
+## 52                                        WAUKESHA MEMORIAL HOSPITAL    WI
+## 53                                         FAIRMONT GENERAL HOSPITAL    WV
+## 54                                        CHEYENNE VA MEDICAL CENTER    WY
+</code></pre>
+
+<pre><code class="r">class(rankall(&quot;heart failure&quot;, 10))
+</code></pre>
+
+<pre><code>## [1] &quot;data.frame&quot;
+</code></pre>
+
+<pre><code class="r">rankall(&quot;heart failure&quot;, 10)  # Incorrect
+</code></pre>
+
+<pre><code>##                                              hospital state
+## 1                         FAIRBANKS MEMORIAL HOSPITAL    AK
+## 2                           SPRINGHILL MEDICAL CENTER    AL
+## 3           BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK    AR
+## 4                               BANNER HEART HOSPITAL    AZ
+## 5                                    CHINESE HOSPITAL    CA
+## 6                              POUDRE VALLEY HOSPITAL    CO
+## 7                           MASONIC HOME AND HOSPITAL    CT
+## 8                                                &lt;NA&gt;    DC
+## 9                                                &lt;NA&gt;    DE
+## 10                               DOCTORS HOSPITAL INC    FL
+## 11                             EMANUEL MEDICAL CENTER    GA
+## 12                                               &lt;NA&gt;    GU
+## 13                           WAHIAWA GENERAL HOSPITAL    HI
+## 14                                  ST LUKES HOSPITAL    IA
+## 15                            PORTNEUF MEDICAL CENTER    ID
+## 16                    ALEXIAN BROTHERS MEDICAL CENTER    IL
+## 17                      HOWARD REGIONAL HEALTH SYSTEM    IN
+## 18                            DECATUR COUNTY HOSPITAL    KS
+## 19                             ST ELIZABETH FT THOMAS    KY
+## 20                          ST FRANCIS MEDICAL CENTER    LA
+## 21               BETH ISRAEL DEACONESS MEDICAL CENTER    MA
+## 22                         MARYLAND GENERAL  HOSPITAL    MD
+## 23                                CARY MEDICAL CENTER    ME
+## 24                HENRY FORD WEST BLOOMFIELD HOSPITAL    MI
+## 25                                  OWATONNA HOSPITAL    MN
+## 26            ST LOUIS-JOHN COCHRAN VA MEDICAL CENTER    MO
+## 27                            CALHOUN HEALTH SERVICES    MS
+## 28                               SIDNEY HEALTH CENTER    MT
+## 29                             WAKEMED, CARY HOSPITAL    NC
+## 30                     SAKAKAWEA MEDICAL CENTER - CAH    ND
+## 31                         BOX BUTTE GENERAL HOSPITAL    NE
+## 32                       PORTSMOUTH REGIONAL HOSPITAL    NH
+## 33                 OUR LADY OF LOURDES MEDICAL CENTER    NJ
+## 34   HOLY CROSS HOSPITAL A DIV OF TAOS HEALTH SYSTEMS    NM
+## 35                  SUMMERLIN HOSPITAL MEDICAL CENTER    NV
+## 36                               MOUNT SINAI HOSPITAL    NY
+## 37                         TRUMBULL MEMORIAL HOSPITAL    OH
+## 38                       SAINT FRANCIS HOSPITAL SOUTH    OK
+## 39                   ST CHARLES MEDICAL CENTER - BEND    OR
+## 40                      HAHNEMANN UNIVERSITY HOSPITAL    PA
+## 41                     HOSPITAL HERMANOS MELENDEZ INC    PR
+## 42                                   NEWPORT HOSPITAL    RI
+## 43                          CAROLINAS HOSPITAL SYSTEM    SC
+## 44 AVERA MCKENNAN HOSPITAL &amp; UNIVERSITY HEALTH CENTER    SD
+## 45                                  CROCKETT HOSPITAL    TN
+## 46                     VALLEY REGIONAL MEDICAL CENTER    TX
+## 47                        UINTAH BASIN MEDICAL CENTER    UT
+## 48                  CARILION GILES COMMUNITY HOSPITAL    VA
+## 49                                               &lt;NA&gt;    VI
+## 50                     CENTRAL VERMONT MEDICAL CENTER    VT
+## 51                 KITTITAS VALLEY COMMUNITY HOSPITAL    WA
+## 52          WHEATON FRANCISCAN HEALTHCARE- ST FRANCIS    WI
+## 53                      MARTINSBURG VA MEDICAL CENTER    WV
+## 54                  CAMPBELL COUNTY MEMORIAL HOSPITAL    WY
+</code></pre>
+
+<pre><code class="r">rankall(&quot;heart failure&quot;)
+</code></pre>
+
+<pre><code>##                                                             hospital state
+## 1                                           SOUTH PENINSULA HOSPITAL    AK
+## 2                                 GEORGE H. LANIER MEMORIAL HOSPITAL    AL
+## 3                       VA CENTRAL AR. VETERANS HEALTHCARE SYSTEM LR    AR
+## 4                               BANNER GOOD SAMARITAN MEDICAL CENTER    AZ
+## 5                                  CENTINELA HOSPITAL MEDICAL CENTER    CA
+## 6                                          PARKER ADVENTIST HOSPITAL    CO
+## 7                                            YALE-NEW HAVEN HOSPITAL    CT
+## 8                                                PROVIDENCE HOSPITAL    DC
+## 9                                  BAYHEALTH - KENT GENERAL HOSPITAL    DE
+## 10                         FLORIDA HOSPITAL HEARTLAND MEDICAL CENTER    FL
+## 11                                                  DOCTORS HOSPITAL    GA
+## 12                                  GUAM MEMORIAL HOSPITAL AUTHORITY    GU
+## 13                                            KUAKINI MEDICAL CENTER    HI
+## 14                               MERCY MEDICAL CENTER - CEDAR RAPIDS    IA
+## 15                            SAINT ALPHONSUS MEDICAL CENTER - NAMPA    ID
+## 16                                    RUSH UNIVERSITY MEDICAL CENTER    IL
+## 17                                         ST CATHERINE HOSPITAL INC    IN
+## 18                                               HAYS MEDICAL CENTER    KS
+## 19                                        WESTLAKE REGIONAL HOSPITAL    KY
+## 20                                    WILLIS KNIGHTON MEDICAL CENTER    LA
+## 21                                     ST ELIZABETH&#39;S MEDICAL CENTER    MA
+## 22                                   MEDSTAR GOOD SAMARITAN HOSPITAL    MD
+## 23                MILES MEMORIAL HOSPITAL (LINCOLN COUNTY HEALTHCARE    ME
+## 24                                        HARPER UNIVERSITY HOSPITAL    MI
+## 25                        ESSENTIA HEALTH ST JOSEPH&#39;S MEDICAL CENTER    MN
+## 26                                        NORTH KANSAS CITY HOSPITAL    MO
+## 27                                         SOUTH CENTRAL REG MED CTR    MS
+## 28                                      COMMUNITY MEDICAL CENTER INC    MT
+## 29                               FIRSTHEALTH MOORE REGIONAL HOSPITAL    NC
+## 30                                        ST ALOISIUS MEDICAL CENTER    ND
+## 31                                           NEBRASKA HEART HOSPITAL    NE
+## 32                                          VALLEY REGIONAL HOSPITAL    NH
+## 33                                      EAST ORANGE GENERAL HOSPITAL    NJ
+## 34                              LOVELACE REGIONAL HOSPITAL - ROSWELL    NM
+## 35                                             MOUNTAINVIEW HOSPITAL    NV
+## 36                                  KINGSBROOK JEWISH MEDICAL CENTER    NY
+## 37                                                 FAIRVIEW HOSPITAL    OH
+## 38                                     DUNCAN REGIONAL HOSPITAL, INC    OK
+## 39                                        PORTLAND VA MEDICAL CENTER    OR
+## 40                                    PHILADELPHIA VA MEDICAL CENTER    PA
+## 41                                  SAN LUKE&#39;S MEMORIAL HOSPITAL INC    PR
+## 42                                                 WESTERLY HOSPITAL    RI
+## 43                                           PALMETTO HEALTH BAPTIST    SC
+## 44                     VA BLACK HILLS HEALTHCARE SYSTEM - FORT MEADE    SD
+## 45                         WELLMONT HAWKINS COUNTY MEMORIAL HOSPITAL    TN
+## 46                                        FORT DUNCAN MEDICAL CENTER    TX
+## 47 VA SALT LAKE CITY HEALTHCARE - GEORGE E. WAHLEN VA MEDICAL CENTER    UT
+## 48                                          SENTARA POTOMAC HOSPITAL    VA
+## 49                            GOV JUAN F LUIS HOSPITAL &amp; MEDICAL CTR    VI
+## 50                                              SPRINGFIELD HOSPITAL    VT
+## 51                                         HARBORVIEW MEDICAL CENTER    WA
+## 52                                        WAUKESHA MEMORIAL HOSPITAL    WI
+## 53                                         FAIRMONT GENERAL HOSPITAL    WV
+## 54                                        CHEYENNE VA MEDICAL CENTER    WY
+</code></pre>
+
+<pre><code class="r">rankall(&quot;pneumonia&quot;, &quot;worst&quot;)
+</code></pre>
+
+<pre><code>##                                       hospital state
+## 1                 ALASKA NATIVE MEDICAL CENTER    AK
+## 2                  JACKSONVILLE MEDICAL CENTER    AL
+## 3                  RIVER VALLEY MEDICAL CENTER    AR
+## 4               HAVASU REGIONAL MEDICAL CENTER    AZ
+## 5               DELANO REGIONAL MEDICAL CENTER    CA
+## 6         ST MARYS HOSPITAL AND MEDICAL CENTER    CO
+## 7                        MILFORD HOSPITAL, INC    CT
+## 8               GEORGETOWN UNIVERSITY HOSPITAL    DC
+## 9        CHRISTIANA CARE HEALTH SERVICES, INC.    DE
+## 10        SEVEN RIVERS REGIONAL MEDICAL CENTER    FL
+## 11            MCDUFFIE REGIONAL MEDICAL CENTER    GA
+## 12            GUAM MEMORIAL HOSPITAL AUTHORITY    GU
+## 13                MAUI MEMORIAL MEDICAL CENTER    HI
+## 14                       BURGESS HEALTH CENTER    IA
+## 15                 BEAR LAKE MEMORIAL HOSPITAL    ID
+## 16                           ST JOHNS HOSPITAL    IL
+## 17 INDIANA UNIVERSITY HEALTH LA PORTE HOSPITAL    IN
+## 18              WESTERN PLAINS MEDICAL COMPLEX    KS
+## 19                     CALDWELL MEDICAL CENTER    KY
+## 20           TERREBONNE GENERAL MEDICAL CENTER    LA
+## 21                     ATHOL MEMORIAL HOSPITAL    MA
+## 22                      CIVISTA MEDICAL CENTER    MD
+## 23                          MID COAST HOSPITAL    ME
+## 24                 ASPIRUS GRAND VIEW HOSPITAL    MI
+## 25                      GLACIAL RIDGE HOSPITAL    MN
+## 26          UNIVERSITY OF MISSOURI HEALTH CARE    MO
+## 27                      BOLIVAR MEDICAL CENTER    MS
+## 28                     GLENDIVE MEDICAL CENTER    MT
+## 29                   VIDANT EDGECOMBE HOSPITAL    NC
+## 30                    OAKES COMMUNITY HOSPITAL    ND
+## 31                 MEMORIAL COMMUNITY HOSPITAL    NE
+## 32               LAKES REGION GENERAL HOSPITAL    NH
+## 33              BERGEN REGIONAL MEDICAL CENTER    NJ
+## 34                                UNM HOSPITAL    NM
+## 35        CARSON TAHOE REGIONAL MEDICAL CENTER    NV
+## 36                    ONEIDA HEALTHCARE CENTER    NY
+## 37          COSHOCTON COUNTY MEMORIAL HOSPITAL    OH
+## 38                MERCY MEMORIAL HEALTH CENTER    OK
+## 39                           BAY AREA HOSPITAL    OR
+## 40           POTTSTOWN MEMORIAL MEDICAL CENTER    PA
+## 41                HOSPITAL SAN CARLOS BORROMEO    PR
+## 42                   SOUTH COUNTY HOSPITAL INC    RI
+## 43            LAURENS COUNTY HEALTHCARE SYSTEM    SC
+## 44               HURON REGIONAL MEDICAL CENTER    SD
+## 45              ATHENS REGIONAL MEDICAL CENTER    TN
+## 46                    LIMESTONE MEDICAL CENTER    TX
+## 47                         CASTLEVIEW HOSPITAL    UT
+## 48                      SENTARA LEIGH HOSPITAL    VA
+## 49           ROY LESTER SCHNEIDER HOSPITAL,THE    VI
+## 50                        PORTER HOSPITAL, INC    VT
+## 51                      OLYMPIC MEDICAL CENTER    WA
+## 52  MAYO CLINIC HEALTH SYSTEM - NORTHLAND, INC    WI
+## 53                      PLATEAU MEDICAL CENTER    WV
+## 54            NORTH BIG HORN HOSPITAL DISTRICT    WY
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+<p>Submission</p>
+
+<pre><code class="r">source(&quot;http://d396qusza40orc.cloudfront.net/rprog%2Fscripts%2Fsubmitscript3.R&quot;)
+submit()
+</code></pre>
+
+<pre><code>## [1] &#39;best&#39; part 1
+## [2] &#39;best&#39; part 2
+## [3] &#39;best&#39; part 3
+## [4] &#39;rankhospital&#39; part 1
+## [5] &#39;rankhospital&#39; part 2
+## [6] &#39;rankhospital&#39; part 3
+## [7] &#39;rankhospital&#39; part 4
+## [8] &#39;rankall&#39; part 1
+## [9] &#39;rankall&#39; part 2
+## [10] &#39;rankall&#39; part 3
+## Which part are you submitting [1-10]?
+</code></pre>
+
+<pre><code>## Error: missing value where TRUE/FALSE needed
+</code></pre>
+
+<p>Iterations of previous attempts</p>
+
+<pre><code class="r">## 
+rm(dt1)
+</code></pre>
+
+<pre><code>## Warning: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">num = 4
+dt1 &lt;- dt[, list(rank = num), by = State]
+</code></pre>
+
+<pre><code>## Error: object &#39;State&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt1
+setkey(dt1, State, rank)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt[dt1,State,Hospital.Name] dt[dt1,Hospital.Name,dt1$State] #12 is not
+# missed
+merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">
+
+
+
+## Worst Ranks
+dt1 &lt;- dt[, list(rank = max(rank)), by = State]
+</code></pre>
+
+<pre><code>## Error: invalid &#39;type&#39; (closure) of argument
+</code></pre>
+
+<pre><code class="r">dt1
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">head(dt1)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">setkey(dt1, State, rank)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">key(dt1)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">key(dt)
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r"># dt[dt1,] dt[dt1,Hospital.Name,State]
+dt[dt1, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt[dt1,dt1$State,Hospital.Name] ## So many number of rows
+dt[dt1, Hospital.Name, dt1$State]  ## Opposite columnn order
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">## 
+rm(dt1)
+</code></pre>
+
+<pre><code>## Warning: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">num = 4
+dt1 &lt;- dt[, list(rank = num), by = State]
+</code></pre>
+
+<pre><code>## Error: object &#39;State&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt1
+setkey(dt1, State, rank)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt[dt1,State,Hospital.Name] dt[dt1,Hospital.Name,dt1$State] #12 is not
+# missed
+merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">
+## 
+rm(dt1)
+</code></pre>
+
+<pre><code>## Warning: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">num = 10
+dt1
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">dt1 &lt;- dt[, list(rank = num), by = State]
+</code></pre>
+
+<pre><code>## Error: object &#39;State&#39; not found
+</code></pre>
+
+<pre><code class="r">setkey(dt1, State, rank)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt[dt1,Hospital.Name,dt1$State] #12 is not missed
+merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">## 
+rm(dt1)
+</code></pre>
+
+<pre><code>## Warning: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r">num = 1
+dt1 &lt;- dt[, list(rank = num), by = State]
+</code></pre>
+
+<pre><code>## Error: object &#39;State&#39; not found
+</code></pre>
+
+<pre><code class="r">setkey(dt1, State, rank)
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
+</code></pre>
+
+<pre><code class="r"># dt[dt1,Hospital.Name,dt1$State] #12 is not missed
+merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+</code></pre>
+
+<pre><code>## Error: object &#39;dt1&#39; not found
 </code></pre>
 
 <pre><code class="r">rm(list = ls())
