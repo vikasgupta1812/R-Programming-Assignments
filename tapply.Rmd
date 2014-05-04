@@ -1,0 +1,50 @@
+tapply
+========================================================
+[The tapply function](http://www.ats.ucla.edu/stat/r/library/advanced_function_r.htm#tapply)
+
+Applies a function to each cell of a ragged array.
+
+tapply(array, indicies, function, ..., simplify)
+The function is applied to each of the cells which are defined by the categorical variables listed in argument indicies. If the results of applying function to each cell is a single number then the results are returned in a multi-way array which has as many dimensions as there are components in the argument indicies. For example, if the argument indicies = c(gender, employed) then the result will be a 2 by 2 matrix with rows defined by male, female and columns defined by employed, unemployed. If the results are not a single value then the results are in a list with an dim attribute which means that it prints like a list but the user access the components by using subscripts like in an array.
+
+```{r}
+x1 <- runif(16)
+x1
+```
+
+```{r}
+cat1 <- rep(1:4, 4)
+cat1
+```
+
+
+```{r}
+cat2 <- c(rep(1, 8), rep(2, 8))
+cat2
+```
+
+
+
+```{r}
+mat2.df <- data.frame(x1)
+names(mat2.df) <- c("x1")
+mat2.df$cat1 <- cat1
+mat2.df$cat2 <- cat2
+mat2.df
+```
+
+```{r}
+tapply(mat2.df$x1, mat2.df$cat1, mean)
+```
+
+
+```{r}
+tapply(mat2.df$x1, mat2.df$cat2, mean)
+```
+
+```{r}
+tapply(mat2.df$x1, list(mat2.df$cat1, mat2.df$cat2), mean)
+```
+
+
+
