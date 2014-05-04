@@ -539,7 +539,7 @@ Write a function called rankall that takes two arguments: an outcome name (outco
 
 
 
-
+Reset everything
 ```{r}
 rm(list = ls())
 ```
@@ -575,34 +575,62 @@ rankall  <- function(outcome, num = "best") {
       names(df1)[3] <- "Rate"
   }
   
+  #Rename Column name of Hospital name to Hospital
+  names(df1)[1]  <- "hospital"
+  names(df1)[2]  <- "state"
   # Remove rows where Ratings are not known.
   df1 <- df1[!is.na(df1$Rate), ]
-  head(df1)
-  # Order the dataframe by Names to help in Ranking
-  df1 <- df1[order(df1[1], df1[2]), ]
-  # head(df1) tail(df1)
-  
+  #head(df1)
+
   library(data.table)
-  dt <- as.data.table(df1[,c("Hospital.Name","State","Rate")])
-  head(dt)
-  dt1  <- dt[,list(rank = rank(Rate,ties.method = "first")), by = State]
-  dt$rank  <- dt1$rank
-  head(dt)
-  setkey(dt,State,rank)
-  head(dt)
-  rm(dt1)
-  
-  ## Worst Ranks
-  dt1  <- dt[,list(rank = max(rank)),by = State]
-  dt1
-  head(dt1)
-  setkey(dt1,State,rank)
-  key(dt1)
-  key(dt)
-  dt[dt1,]
-  #dt[dt1,Hospital.Name,State]
-  dt[dt1,State,Hospital.Name]
-  dt[dt1,Hospital.Name,dt1$State]
+  dt <- as.data.table(df1[,c("hospital","state","Rate")])
+  #head(dt)
+  dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "first")), by = state]
+
+  #=======================
+  if (num == "best") {
+    dt2  <- dt1[,list(rank = 1),by = state]
+  } else if (num == "worst") {
+    dt2  <- dt1[,list(rank = max(rank)),by = state]
+  } else {
+    dt2  <- dt1[,list(rank = num),by = state]
+  }
+  #=======================
+  setkey(dt2,state,rank)
+  setkey(dt1,state,rank)
+  return(as.data.frame(dt1[dt2,][,list(hospital, state,rank)]))
+}
+```
+
+Unit tests
+
+```{r}
+rm(list=ls())
+source('./rankall.R')
+head(rankall("heart attack", 20), 10)
+tail(rankall("pneumonia", "worst"), 3)
+tail(rankall("heart failure"), 10)
+class(rankall("heart failure", 10))
+rankall("heart failure", 10)
+rankall("heart failure")
+rankall("pneumonia", "worst")
+
+
+```
+
+Submission
+```{r}
+source("http://d396qusza40orc.cloudfront.net/rprog%2Fscripts%2Fsubmitscript3.R")
+submit()
+```
+
+
+
+
+
+
+Iterations of previous attempts
+```{r}
   ##
   rm(dt1)
   num = 4
@@ -612,6 +640,33 @@ rankall  <- function(outcome, num = "best") {
   #dt[dt1,State,Hospital.Name]
   #dt[dt1,Hospital.Name,dt1$State] #12 is not missed 
   merge(dt1,dt,all.x = T)[,State,Hospital.Name]
+  }
+  
+  
+  
+  ## Worst Ranks
+  dt1  <- dt[,list(rank = max(rank)),by = State]
+  dt1
+  head(dt1)
+  setkey(dt1,State,rank)
+  key(dt1)
+  key(dt)
+  #dt[dt1,]
+  #dt[dt1,Hospital.Name,State]
+  dt[dt1,State,Hospital.Name]
+  #dt[dt1,dt1$State,Hospital.Name] ## So many number of rows
+  dt[dt1,Hospital.Name,dt1$State] ## Opposite columnn order
+  merge(dt1,dt,all.x = T)[,State,Hospital.Name]
+  ##
+  rm(dt1)
+  num = 4
+  dt1  <- dt[,list(rank = num),by = State]
+  #dt1
+  setkey(dt1,State,rank)
+  #dt[dt1,State,Hospital.Name]
+  #dt[dt1,Hospital.Name,dt1$State] #12 is not missed 
+  merge(dt1,dt,all.x = T)[,State,Hospital.Name]
+  
   ##
   rm(dt1)
   num = 10
@@ -627,8 +682,11 @@ rankall  <- function(outcome, num = "best") {
   setkey(dt1,State,rank)
   #dt[dt1,Hospital.Name,dt1$State] #12 is not missed
   merge(dt1,dt,all.x = T)[,State,Hospital.Name]
-}
 ```
+
+
+
+
 
 ```{r}
   rm(list = ls())

@@ -3898,7 +3898,7 @@ Write a function called rankall that takes two arguments: an outcome name (outco
 
 
 
-
+Reset everything
 
 ```r
 rm(list = ls())
@@ -3936,503 +3936,113 @@ rankall <- function(outcome, num = "best") {
         names(df1)[3] <- "Rate"
     }
     
+    # Rename Column name of Hospital name to Hospital
+    names(df1)[1] <- "hospital"
+    names(df1)[2] <- "state"
     # Remove rows where Ratings are not known.
     df1 <- df1[!is.na(df1$Rate), ]
-    head(df1)
-    # Order the dataframe by Names to help in Ranking
-    df1 <- df1[order(df1[1], df1[2]), ]
-    # head(df1) tail(df1)
+    # head(df1)
     
     library(data.table)
-    dt <- as.data.table(df1[, c("Hospital.Name", "State", "Rate")])
-    head(dt)
-    dt1 <- dt[, list(rank = rank(Rate, ties.method = "first")), by = State]
+    dt <- as.data.table(df1[, c("hospital", "state", "Rate")])
+    # head(dt)
+    dt1 <- dt[, list(rank = rank(Rate, ties.method = "first")), by = state]
     dt$rank <- dt1$rank
-    head(dt)
-    setkey(dt, State, rank)
-    head(dt)
+    # head(dt)
+    setkey(dt, state, rank)
+    # head(dt)
     rm(dt1)
     
-    ## Worst Ranks
-    dt1 <- dt[, list(rank = max(rank)), by = State]
-    dt1
-    head(dt1)
-    setkey(dt1, State, rank)
-    key(dt1)
-    key(dt)
-    dt[dt1, ]
-    # dt[dt1,Hospital.Name,State]
-    dt[dt1, State, Hospital.Name]
-    dt[dt1, Hospital.Name, dt1$State]
-    ## 
-    rm(dt1)
-    num = 4
-    dt1 <- dt[, list(rank = num), by = State]
-    # dt1
-    setkey(dt1, State, rank)
-    # dt[dt1,State,Hospital.Name] dt[dt1,Hospital.Name,dt1$State] #12 is not
-    # missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
-    ## 
-    rm(dt1)
-    num = 10
-    dt1
-    dt1 <- dt[, list(rank = num), by = State]
-    setkey(dt1, State, rank)
-    # dt[dt1,Hospital.Name,dt1$State] #12 is not missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
-    ## 
-    rm(dt1)
-    num = 1
-    dt1 <- dt[, list(rank = num), by = State]
-    setkey(dt1, State, rank)
-    # dt[dt1,Hospital.Name,dt1$State] #12 is not missed
-    merge(dt1, dt, all.x = T)[, State, Hospital.Name]
+    if (num == "best") {
+        num = 1
+        dt2 <- dt[, list(rank = num), by = state]
+        setkey(dt2, state, rank)
+        return(merge(dt2, dt, all.x = T)[, state, hospital])
+    } else if (num == "worst") {
+        dt2 <- dt[, list(rank = max(rank)), by = state]
+        setkey(dt2, state, rank)
+        return(merge(dt2, dt, all.x = T)[, state, hospital])
+    } else {
+        dt2 <- dt[, list(rank = num), by = state]
+        setkey(dt2, state, rank)
+        return(merge(dt2, dt, all.x = T)[, state, hospital])
+    }
+    
 }
 ```
 
+
+Unit tests
 
 
 ```r
 rm(list = ls())
-df <- read.csv("./outcome-of-care-measures.csv", colClasses = c(Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack = "character", 
-    Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure = "character", 
-    Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia = "character", Hospital.Name = "character"))
-
-df[, 11] <- suppressWarnings(as.numeric(df[, 11]))
-df[, 17] <- suppressWarnings(as.numeric(df[, 17]))
-df[, 23] <- suppressWarnings(as.numeric(df[, 23]))
-
-# df$State grep('State', names(df))
-
-# Subset to have only Heart Attack Data
-df1 <- df[, c(2, 7, 11)]
-names(df1)[3] <- "Rate"
-head(df1)
+head(rankall("heart attack", 20), 10)
 ```
 
 ```
-##                      Hospital.Name State Rate
-## 1 SOUTHEAST ALABAMA MEDICAL CENTER    AL 14.3
-## 2    MARSHALL MEDICAL CENTER SOUTH    AL 18.5
-## 3   ELIZA COFFEE MEMORIAL HOSPITAL    AL 18.1
-## 4         MIZELL MEMORIAL HOSPITAL    AL   NA
-## 5      CRENSHAW COMMUNITY HOSPITAL    AL   NA
-## 6    MARSHALL MEDICAL CENTER NORTH    AL   NA
+## Error: could not find function "rankall"
 ```
 
 ```r
-tail(df1)
+tail(rankall("pneumonia", "worst"), 3)
 ```
 
 ```
-##                                         Hospital.Name State Rate
-## 4701 TEXAS HEALTH HEART & VASCULAR HOSPITAL ARLINGTON    TX   NA
-## 4702                 WESTBURY COMMUNITY HOSPITAL, LLC    TX   NA
-## 4703                   METHODIST HOSPITAL FOR SURGERY    TX   NA
-## 4704           ST LUKE'S HOSPITAL AT THE VINTAGE, LLC    TX   NA
-## 4705                  HERITAGE PARK SURGICAL HOSPITAL    TX   NA
-## 4706                  METHODIST WEST HOUSTON HOSPITAL    TX   NA
+## Error: could not find function "rankall"
 ```
 
 ```r
-# Remove rows where Ratings are not known.
-df1 <- df1[!is.na(df1$Rate), ]
-
-# Order the dataframe by Names to help in Ranking. This might not be
-# required with data.table
-df1 <- df1[order(df1[, 1], df1[, 2]), ]
-`?`(order)
-# install.packages('data.table')
-library(data.table)
-rm(dt)
+tail(rankall("heart failure"), 10)
 ```
 
 ```
-## Warning: object 'dt' not found
+## Error: could not find function "rankall"
 ```
 
 ```r
-head(df1)
+rankall("heart failure", 10)
 ```
 
 ```
-##                        Hospital.Name State Rate
-## 2137    ABBOTT NORTHWESTERN HOSPITAL    MN 12.3
-## 4045 ABILENE REGIONAL MEDICAL CENTER    TX 17.2
-## 3561      ABINGTON MEMORIAL HOSPITAL    PA 14.3
-## 3531                   ACMH HOSPITAL    PA 13.1
-## 1387         ADAMS MEMORIAL HOSPITAL    IN 15.1
-## 3168   ADENA REGIONAL MEDICAL CENTER    OH 15.3
-```
-
-```r
-dt <- as.data.table(df1[, c("Hospital.Name", "State", "Rate")])
-# setkey(dt,State,Hospital.Name) key(dt)
-head(dt)
-```
-
-```
-##                      Hospital.Name State Rate
-## 1:    ABBOTT NORTHWESTERN HOSPITAL    MN 12.3
-## 2: ABILENE REGIONAL MEDICAL CENTER    TX 17.2
-## 3:      ABINGTON MEMORIAL HOSPITAL    PA 14.3
-## 4:                   ACMH HOSPITAL    PA 13.1
-## 5:         ADAMS MEMORIAL HOSPITAL    IN 15.1
-## 6:   ADENA REGIONAL MEDICAL CENTER    OH 15.3
-```
-
-```r
-dt1 <- dt[, list(rank = rank(Rate, ties.method = "first")), by = State]
-dt$rank <- dt1$rank
-
-head(dt)
-```
-
-```
-##                      Hospital.Name State Rate rank
-## 1:    ABBOTT NORTHWESTERN HOSPITAL    MN 12.3    2
-## 2: ABILENE REGIONAL MEDICAL CENTER    TX 17.2   15
-## 3:      ABINGTON MEMORIAL HOSPITAL    PA 14.3   31
-## 4:                   ACMH HOSPITAL    PA 13.1   18
-## 5:         ADAMS MEMORIAL HOSPITAL    IN 15.1    8
-## 6:   ADENA REGIONAL MEDICAL CENTER    OH 15.3   32
-```
-
-```r
-
-setkey(dt, rank)
-key(dt)
-```
-
-```
-## [1] "rank"
-```
-
-```r
-head(dt)
-```
-
-```
-##                                 Hospital.Name State Rate rank
-## 1: ALEGENT HEALTH BERGAN MERCY MEDICAL CENTER    NE 14.3    1
-## 2:            ASHTABULA COUNTY MEDICAL CENTER    OH 14.0    1
-## 3:                   CALAIS REGIONAL HOSPITAL    ME 17.1    1
-## 4:                   COMMUNITY HOSPITAL SOUTH    IN 13.6    1
-## 5:             D W MCMILLAN MEMORIAL HOSPITAL    AL 15.7    1
-## 6:                      FHN MEMORIAL HOSPITAL    IL 16.1    1
-```
-
-```r
-dt[J(4)][, Hospital.Name, State]
-```
-
-```
-##     State                                    Hospital.Name
-##  1:    IL                 ADVOCATE SOUTH SUBURBAN HOSPITAL
-##  2:    IL                     NORTHWEST COMMUNITY HOSPITAL
-##  3:    IL                 PROVENA ST JOSEPH MEDICAL CENTER
-##  4:    TX               BAYLOR HEART AND VASCULAR HOSPITAL
-##  5:    TX                       SOUTHWEST GENERAL HOSPITAL
-##  6:    NC                     CAROLINA EAST MEDICAL CENTER
-##  7:    NC                   VIDANT ROANOKE CHOWAN HOSPITAL
-##  8:    LA             CHRISTUS ST FRANCES CABRINI HOSPITAL
-##  9:    LA LOUISIANA MEDICAL CENTER AND HEART HOSPITAL, LLC
-## 10:    LA                            SABINE MEDICAL CENTER
-## 11:    MI               CRITTENTON HOSPITAL MEDICAL CENTER
-## 12:    MI              HENRY FORD WEST BLOOMFIELD HOSPITAL
-## 13:    MI                        MERCY HOSPITAL - GRAYLING
-## 14:    OH           FORT HAMILTON HUGHES MEMORIAL HOSPITAL
-## 15:    OH                         MERCY HOSPITAL FAIRFIELD
-## 16:    OH                       TRUMBULL MEMORIAL HOSPITAL
-## 17:    MN                 GRAND ITASCA CLINIC AND HOSPITAL
-## 18:    MN              MAYO CLINIC HEALTH SYSTEM - MANKATO
-## 19:    HI                           KUAKINI MEDICAL CENTER
-## 20:    WA               LEGACY SALMON CREEK MEDICAL CENTER
-## 21:    FL                   MARTIN MEMORIAL MEDICAL CENTER
-## 22:    FL                       MEASE COUNTRYSIDE HOSPITAL
-## 23:    FL                    PALM SPRINGS GENERAL HOSPITAL
-## 24:    FL              WUESTHOFF MEDICAL CENTER  ROCKLEDGE
-## 25:    NY                             MERCY MEDICAL CENTER
-## 26:    NY                WYOMING COUNTY COMMUNITY HOSPITAL
-## 27:    MA                         METROWEST MEDICAL CENTER
-## 28:    WI                      MILWAUKEE VA MEDICAL CENTER
-## 29:    NJ                            MOUNTAINSIDE HOSPITAL
-## 30:    SC                NEWBERRY COUNTY MEMORIAL HOSPITAL
-## 31:    CA             ORANGE COAST MEMORIAL MEDICAL CENTER
-## 32:    CA       PARKVIEW COMMUNITY HOSPITAL MEDICAL CENTER
-## 33:    CA                       SAINT JOHN'S HEALTH CENTER
-## 34:    CA                   SANTA BARBARA COTTAGE HOSPITAL
-## 35:    CA       UNIVERSITY OF CALIFORNIA IRVINE MED CENTER
-## 36:    CA                VA N CALIFORNIA HEALTHCARE SYSTEM
-## 37:    CA                 WHITTIER HOSPITAL MEDICAL CENTER
-## 38:    KY                     PINEVILLE COMMUNITY HOSPITAL
-## 39:    KY                    T J SAMSON COMMUNITY HOSPITAL
-## 40:    PR    SISTEMA INTEGRADOS DE SALUD DEL SUR OESTE INC
-## 41:    MS             ST DOMINIC-JACKSON MEMORIAL HOSPITAL
-## 42:    MS             UNIVERSITY OF MISSISSIPPI MED CENTER
-## 43:    TN                               ST THOMAS HOSPITAL
-## 44:    TN                     VOLUNTEER COMMUNITY HOSPITAL
-## 45:    GA                 TANNER MEDICAL CENTER VILLA RICA
-## 46:    WV                           UNITED HOSPITAL CENTER
-## 47:    WV                     WILLIAMSON MEMORIAL HOSPITAL
-## 48:    PA                                     UPMC HORIZON
-## 49:    CO                 VALLEY VIEW HOSPITAL ASSOCIATION
-## 50:    AR       WASHINGTON REGIONAL MED CTR AT NORTH HILLS
-## 51:    IN                           WITHAM HEALTH SERVICES
-##     State                                    Hospital.Name
-```
-
-```r
-
-
-dt[dt$rank == 4, Hospital.Name, State]
-```
-
-```
-##     State                                    Hospital.Name
-##  1:    IL                 ADVOCATE SOUTH SUBURBAN HOSPITAL
-##  2:    IL                     NORTHWEST COMMUNITY HOSPITAL
-##  3:    IL                 PROVENA ST JOSEPH MEDICAL CENTER
-##  4:    TX               BAYLOR HEART AND VASCULAR HOSPITAL
-##  5:    TX                       SOUTHWEST GENERAL HOSPITAL
-##  6:    NC                     CAROLINA EAST MEDICAL CENTER
-##  7:    NC                   VIDANT ROANOKE CHOWAN HOSPITAL
-##  8:    LA             CHRISTUS ST FRANCES CABRINI HOSPITAL
-##  9:    LA LOUISIANA MEDICAL CENTER AND HEART HOSPITAL, LLC
-## 10:    LA                            SABINE MEDICAL CENTER
-## 11:    MI               CRITTENTON HOSPITAL MEDICAL CENTER
-## 12:    MI              HENRY FORD WEST BLOOMFIELD HOSPITAL
-## 13:    MI                        MERCY HOSPITAL - GRAYLING
-## 14:    OH           FORT HAMILTON HUGHES MEMORIAL HOSPITAL
-## 15:    OH                         MERCY HOSPITAL FAIRFIELD
-## 16:    OH                       TRUMBULL MEMORIAL HOSPITAL
-## 17:    MN                 GRAND ITASCA CLINIC AND HOSPITAL
-## 18:    MN              MAYO CLINIC HEALTH SYSTEM - MANKATO
-## 19:    HI                           KUAKINI MEDICAL CENTER
-## 20:    WA               LEGACY SALMON CREEK MEDICAL CENTER
-## 21:    FL                   MARTIN MEMORIAL MEDICAL CENTER
-## 22:    FL                       MEASE COUNTRYSIDE HOSPITAL
-## 23:    FL                    PALM SPRINGS GENERAL HOSPITAL
-## 24:    FL              WUESTHOFF MEDICAL CENTER  ROCKLEDGE
-## 25:    NY                             MERCY MEDICAL CENTER
-## 26:    NY                WYOMING COUNTY COMMUNITY HOSPITAL
-## 27:    MA                         METROWEST MEDICAL CENTER
-## 28:    WI                      MILWAUKEE VA MEDICAL CENTER
-## 29:    NJ                            MOUNTAINSIDE HOSPITAL
-## 30:    SC                NEWBERRY COUNTY MEMORIAL HOSPITAL
-## 31:    CA             ORANGE COAST MEMORIAL MEDICAL CENTER
-## 32:    CA       PARKVIEW COMMUNITY HOSPITAL MEDICAL CENTER
-## 33:    CA                       SAINT JOHN'S HEALTH CENTER
-## 34:    CA                   SANTA BARBARA COTTAGE HOSPITAL
-## 35:    CA       UNIVERSITY OF CALIFORNIA IRVINE MED CENTER
-## 36:    CA                VA N CALIFORNIA HEALTHCARE SYSTEM
-## 37:    CA                 WHITTIER HOSPITAL MEDICAL CENTER
-## 38:    KY                     PINEVILLE COMMUNITY HOSPITAL
-## 39:    KY                    T J SAMSON COMMUNITY HOSPITAL
-## 40:    PR    SISTEMA INTEGRADOS DE SALUD DEL SUR OESTE INC
-## 41:    MS             ST DOMINIC-JACKSON MEMORIAL HOSPITAL
-## 42:    MS             UNIVERSITY OF MISSISSIPPI MED CENTER
-## 43:    TN                               ST THOMAS HOSPITAL
-## 44:    TN                     VOLUNTEER COMMUNITY HOSPITAL
-## 45:    GA                 TANNER MEDICAL CENTER VILLA RICA
-## 46:    WV                           UNITED HOSPITAL CENTER
-## 47:    WV                     WILLIAMSON MEMORIAL HOSPITAL
-## 48:    PA                                     UPMC HORIZON
-## 49:    CO                 VALLEY VIEW HOSPITAL ASSOCIATION
-## 50:    AR       WASHINGTON REGIONAL MED CTR AT NORTH HILLS
-## 51:    IN                           WITHAM HEALTH SERVICES
-##     State                                    Hospital.Name
-```
-
-```r
-dt[dt$rank == 1, Hospital.Name, State]
-```
-
-```
-##     State                              Hospital.Name
-##  1:    NE ALEGENT HEALTH BERGAN MERCY MEDICAL CENTER
-##  2:    OH            ASHTABULA COUNTY MEDICAL CENTER
-##  3:    OH                  LICKING MEMORIAL HOSPITAL
-##  4:    OH                   UH GEAUGA MEDICAL CENTER
-##  5:    OH                  WYANDOT MEMORIAL HOSPITAL
-##  6:    ME                   CALAIS REGIONAL HOSPITAL
-##  7:    IN                   COMMUNITY HOSPITAL SOUTH
-##  8:    IN                    METHODIST HOSPITALS INC
-##  9:    AL             D W MCMILLAN MEMORIAL HOSPITAL
-## 10:    IL                      FHN MEMORIAL HOSPITAL
-## 11:    IL       METHODIST MEDICAL CENTER OF ILLINOIS
-## 12:    IL              SAINT ANTHONY'S HEALTH CENTER
-## 13:    IL                  SWEDISH AMERICAN HOSPITAL
-## 14:    MO                 HANNIBAL REGIONAL HOSPITAL
-## 15:    MO                 MERCY HOSPITAL SPRINGFIELD
-## 16:    MO                SSM ST JOSEPH HOSPITAL WEST
-## 17:    MD                        HOLY CROSS HOSPITAL
-## 18:    ID                    KOOTENAI MEDICAL CENTER
-## 19:    NY                   LAWRENCE HOSPITAL CENTER
-## 20:    NY                  MASSENA MEMORIAL HOSPITAL
-## 21:    NY             WYCKOFF HEIGHTS MEDICAL CENTER
-## 22:    NH           MARY HITCHCOCK MEMORIAL HOSPITAL
-## 23:    SC     MCLEOD REGIONAL MEDICAL CENTER-PEE DEE
-## 24:    PA                     MEMORIAL HOSPITAL YORK
-## 25:    PA                         UNIONTOWN HOSPITAL
-## 26:    PA              WILKES-BARRE GENERAL HOSPITAL
-## 27:    CT                    MIDSTATE MEDICAL CENTER
-## 28:    WA          MULTICARE GOOD SAMARITAN HOSPITAL
-## 29:    WA YAKIMA REGIONAL MEDICAL AND CARDIAC CENTER
-## 30:    KS                      NEWTON MEDICAL CENTER
-## 31:    AR                 NW ARKANSAS HOSPITALS, LLC
-## 32:    WI                       OCONOMOWOC MEM HSPTL
-## 33:    WI                        THEDA CLARK MED CTR
-## 34:    TX        PARKLAND HEALTH AND HOSPITAL SYSTEM
-## 35:    TX          VAL VERDE REGIONAL MEDICAL CENTER
-## 36:    TX             WADLEY REGIONAL MEDICAL CENTER
-## 37:    GA            PHOEBE PUTNEY MEMORIAL HOSPITAL
-## 38:    KY                   PIKEVILLE MEDICAL CENTER
-## 39:    NJ                 RARITAN BAY MEDICAL CENTER
-## 40:    NJ                       SHORE MEDICAL CENTER
-## 41:    TN                       ROANE MEDICAL CENTER
-## 42:    TN                  UNIVERSITY MEDICAL CENTER
-## 43:    TN             VANDERBILT UNIVERSITY HOSPITAL
-## 44:    CA               SAN DIMAS COMMUNITY HOSPITAL
-## 45:    CA                        WASHINGTON HOSPITAL
-## 46:    CA                 WOODLAND MEMORIAL HOSPITAL
-## 47:    OR                   SKY LAKES MEDICAL CENTER
-## 48:    MN                          ST MARYS HOSPITAL
-## 49:    MN           VIRGINIA REGIONAL MEDICAL CENTER
-## 50:    FL               UNIVERSITY OF MIAMI HOSPITAL
-## 51:    NM                               UNM HOSPITAL
-## 52:    NC                     WATAUGA MEDICAL CENTER
-## 53:    WV                          WHEELING HOSPITAL
-## 54:    IA                  WINNESHIEK MEDICAL CENTER
-##     State                              Hospital.Name
-```
-
-```r
-dt[dt$rank == 10, Hospital.Name, State]
-```
-
-```
-##     State                                     Hospital.Name
-##  1:    IL                   ALEXIAN BROTHERS MEDICAL CENTER
-##  2:    IL                        JOHN H STROGER JR HOSPITAL
-##  3:    MA                  BAYSTATE FRANKLIN MEDICAL CENTER
-##  4:    MA                           LOWELL GENERAL HOSPITAL
-##  5:    PA                          BUTLER MEMORIAL HOSPITAL
-##  6:    PA              WILLIAMSPORT REGIONAL MEDICAL CENTER
-##  7:    TX                           CITIZENS MEDICAL CENTER
-##  8:    TX     MEMORIAL HERMANN MEMORIAL CITY MEDICAL CENTER
-##  9:    TX                METHODIST MANSFIELD MEDICAL CENTER
-## 10:    TX                       SETON MEDICAL CENTER AUSTIN
-## 11:    TX                         UNIVERSITY MEDICAL CENTER
-## 12:    TX                    VALLEY REGIONAL MEDICAL CENTER
-## 13:    TX                VHS HARLINGEN HOSPITAL COMPANY LLC
-## 14:    TX                         YOAKUM COMMUNITY HOSPITAL
-## 15:    FL                    DOCTOR'S MEMORIAL HOSPITAL INC
-## 16:    FL                  LEESBURG REGIONAL MEDICAL CENTER
-## 17:    FL                 PALM BEACH GARDENS MEDICAL CENTER
-## 18:    GA              EAST GEORGIA REGIONAL MEDICAL CENTER
-## 19:    NY                                GLEN COVE HOSPITAL
-## 20:    NY                     MARY IMOGENE BASSETT HOSPITAL
-## 21:    NY                         PENINSULA HOSPITAL CENTER
-## 22:    CA                  LA PALMA INTERCOMMUNITY HOSPITAL
-## 23:    CA             MISSION COMMUNITY HOSPITAL - PANORAMA
-## 24:    CA                                 OROVILLE HOSPITAL
-## 25:    CA                    SAN JOAQUIN COMMUNITY HOSPITAL
-## 26:    CO                     MEDICAL CENTER OF AURORA, THE
-## 27:    MO                           MERCY HOSPITAL ST LOUIS
-## 28:    MI                    MERCY MEMORIAL HOSPITAL SYSTEM
-## 29:    LA              NATCHITOCHES REGIONAL MEDICAL CENTER
-## 30:    LA                OCHSNER MEDICAL CENTER-BATON ROUGE
-## 31:    LA           THE REGIONAL MEDICAL CENTER OF ACADIANA
-## 32:    NJ                 NEWARK BETH ISRAEL MEDICAL CENTER
-## 33:    OK                         PONCA CITY MEDICAL CENTER
-## 34:    WV                          RALEIGH GENERAL HOSPITAL
-## 35:    VA                 RIVERSIDE SHORE MEMORIAL HOSPITAL
-## 36:    KY                                 SAINT JOSEPH EAST
-## 37:    MD                 SOUTHERN MARYLAND HOSPITAL CENTER
-## 38:    WA                               ST ANTHONY HOSPITAL
-## 39:    KS                          STORMONT-VAIL HEALTHCARE
-## 40:    TN                   SWEETWATER HOSPITAL ASSOCIATION
-## 41:    IA                                TRINITY BETTENDORF
-## 42:    MN UNIVERSITY OF MINNESOTA  MEDICAL CENTER, FAIRVIEW
-## 43:    WI   UNIVERSITY OF WI  HOSPITALS & CLINICS AUTHORITY
-## 44:    SC                   UPSTATE CAROLINA MEDICAL CENTER
-## 45:    SC                       WACCAMAW COMMUNITY HOSPITAL
-## 46:    MS                            WAYNE GENERAL HOSPITAL
-## 47:    OH                       WEST CHESTER MEDICAL CENTER
-##     State                                     Hospital.Name
-```
-
-```r
-
-
-df1$rank <- dt1$V1
-
-
-head(df1)
-```
-
-```
-##                        Hospital.Name State Rate
-## 2137    ABBOTT NORTHWESTERN HOSPITAL    MN 12.3
-## 4045 ABILENE REGIONAL MEDICAL CENTER    TX 17.2
-## 3561      ABINGTON MEMORIAL HOSPITAL    PA 14.3
-## 3531                   ACMH HOSPITAL    PA 13.1
-## 1387         ADAMS MEMORIAL HOSPITAL    IN 15.1
-## 3168   ADENA REGIONAL MEDICAL CENTER    OH 15.3
-```
-
-```r
-head(df1[order(df1[1], df1[4]), ], 20)
-```
-
-```
-## Error: undefined columns selected
-```
-
-```r
-tail(df1[order(df1[1], df1[4]), ], 20)
-```
-
-```
-## Error: undefined columns selected
-```
-
-```r
-
-
-
-
-# Set Rank
-df1$rank <- rank(df1$Rate, ties.method = "first")
-
-# Return the values based on data provided
-if (num == "best") {
-    return(df1[df1$rank == min(df1$rank), c(2, 1)])
-} else if (num == "worst") {
-    return(df1[df1$rank == max(df1$rank), c(2, 1)])
-} else if ((num <= max(df1$rank)) | (num >= min(df1$rank))) {
-    return(df1[df1$rank == num, c(2, 1)])
-} else if ((num > max(df1$rank)) | (num < min(df1$rank))) {
-    return(c(NA, state))
-}
-```
-
-```
-## Error: object 'num' not found
-```
-
-```r
-
+## Error: could not find function "rankall"
 ```
 
 
 
 
 ```r
-`?`(tapply)
+source("http://d396qusza40orc.cloudfront.net/rprog%2Fscripts%2Fsubmitscript3.R")
+submit()
 ```
+
+```
+## [1] 'best' part 1
+## [2] 'best' part 2
+## [3] 'best' part 3
+## [4] 'rankhospital' part 1
+## [5] 'rankhospital' part 2
+## [6] 'rankhospital' part 3
+## [7] 'rankhospital' part 4
+## [8] 'rankall' part 1
+## [9] 'rankall' part 2
+## [10] 'rankall' part 3
+## Which part are you submitting [1-10]?
+```
+
+```
+## Error: missing value where TRUE/FALSE needed
+```
+
+
+
+
+
+
+
+Iterations of previous attempts
+
+
 
 
 
