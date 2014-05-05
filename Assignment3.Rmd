@@ -596,7 +596,10 @@ rankall  <- function(outcome, num = "best") {
   dt <- as.data.table(df1[,c("hospital","state","Rate")])
   #head(dt)
   # Add ranking to the table
-  dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "first")), by = state]
+  #dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "first")), by = state]
+  setkey(dt,state,Rate)
+  dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "random")), by = state]
+  #dt1  <- dt[,list(hospital, Rate, rank = rank(Rate,ties.method = "last")), by = state]
 
   #=======================
   if (num == "best") {
@@ -622,7 +625,9 @@ head(rankall("heart attack", 20), 10)
 tail(rankall("pneumonia", "worst"), 3)
 tail(rankall("heart failure"), 10)
 class(rankall("heart failure", 10))
-rankall("heart failure", 10) # Incorrect
+
+rankall("heart failure", 10)
+rankall("heart failure", 15)
 rankall("heart failure")
 rankall("pneumonia", "worst")
 

@@ -38,7 +38,7 @@ rankall  <- function(outcome, num = "best") {
   dt <- as.data.table(df1[,c("hospital","state","Rate")])
   #head(dt)
   # Add ranking to the table
-  dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "first")), by = state]
+  dt1  <- dt[,list(hospital, rank = rank(Rate,ties.method = "random")), by = state]
   
   #=======================
   if (num == "best") {

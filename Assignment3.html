@@ -3793,8 +3793,12 @@ if (num == &quot;best&quot;) {
 
     library(data.table)
     dt &lt;- as.data.table(df1[, c(&quot;hospital&quot;, &quot;state&quot;, &quot;Rate&quot;)])
-    # head(dt) Add ranking to the table
-    dt1 &lt;- dt[, list(hospital, rank = rank(Rate, ties.method = &quot;first&quot;)), by = state]
+    # head(dt) Add ranking to the table dt1 &lt;- dt[,list(hospital, rank =
+    # rank(Rate,ties.method = &#39;first&#39;)), by = state]
+    setkey(dt, state, Rate)
+    dt1 &lt;- dt[, list(hospital, rank = rank(Rate, ties.method = &quot;random&quot;)), by = state]
+    # dt1 &lt;- dt[,list(hospital, Rate, rank = rank(Rate,ties.method = &#39;last&#39;)),
+    # by = state]
 
     # =======================
     if (num == &quot;best&quot;) {
@@ -3821,14 +3825,14 @@ head(rankall(&quot;heart attack&quot;, 20), 10)
 <pre><code>##                               hospital state
 ## 1                                 &lt;NA&gt;    AK
 ## 2       D W MCMILLAN MEMORIAL HOSPITAL    AL
-## 3    ARKANSAS METHODIST MEDICAL CENTER    AR
+## 3    FAYETTEVILLE AR VA MEDICAL CENTER    AR
 ## 4  JOHN C LINCOLN DEER VALLEY HOSPITAL    AZ
-## 5                SHERMAN OAKS HOSPITAL    CA
+## 5       VA SAN DIEGO HEALTHCARE SYSTEM    CA
 ## 6             SKY RIDGE MEDICAL CENTER    CO
-## 7           ROCKVILLE GENERAL HOSPITAL    CT
+## 7              MIDSTATE MEDICAL CENTER    CT
 ## 8                                 &lt;NA&gt;    DC
 ## 9                                 &lt;NA&gt;    DE
-## 10                DOCTORS HOSPITAL INC    FL
+## 10       GOOD SAMARITAN MEDICAL CENTER    FL
 </code></pre>
 
 <pre><code class="r">tail(rankall(&quot;pneumonia&quot;, &quot;worst&quot;), 3)
@@ -3862,64 +3866,125 @@ head(rankall(&quot;heart attack&quot;, 20), 10)
 <pre><code>## [1] &quot;data.frame&quot;
 </code></pre>
 
-<pre><code class="r">rankall(&quot;heart failure&quot;, 10)  # Incorrect
+<pre><code class="r">
+rankall(&quot;heart failure&quot;, 10)
 </code></pre>
 
 <pre><code>##                                              hospital state
 ## 1                         FAIRBANKS MEMORIAL HOSPITAL    AK
-## 2                           SPRINGHILL MEDICAL CENTER    AL
+## 2                           FLORALA MEMORIAL HOSPITAL    AL
 ## 3           BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK    AR
-## 4                               BANNER HEART HOSPITAL    AZ
-## 5                                    CHINESE HOSPITAL    CA
-## 6                              POUDRE VALLEY HOSPITAL    CO
+## 4                      CARONDELET ST JOSEPHS HOSPITAL    AZ
+## 5                           HUNTINGTON BEACH HOSPITAL    CA
+## 6                     EXEMPLA LUTHERAN MEDICAL CENTER    CO
 ## 7                           MASONIC HOME AND HOSPITAL    CT
 ## 8                                                &lt;NA&gt;    DC
 ## 9                                                &lt;NA&gt;    DE
-## 10                               DOCTORS HOSPITAL INC    FL
-## 11                             EMANUEL MEDICAL CENTER    GA
+## 10                  HIGHLANDS REGIONAL MEDICAL CENTER    FL
+## 11                DEKALB MEDICAL CENTER AT HILLANDALE    GA
 ## 12                                               &lt;NA&gt;    GU
-## 13                           WAHIAWA GENERAL HOSPITAL    HI
+## 13                         HAWAII MEDICAL CENTER EAST    HI
 ## 14                                  ST LUKES HOSPITAL    IA
 ## 15                            PORTNEUF MEDICAL CENTER    ID
 ## 16                    ALEXIAN BROTHERS MEDICAL CENTER    IL
-## 17                      HOWARD REGIONAL HEALTH SYSTEM    IN
-## 18                            DECATUR COUNTY HOSPITAL    KS
+## 17                            CLARK MEMORIAL HOSPITAL    IN
+## 18                              SCOTT COUNTY HOSPITAL    KS
 ## 19                             ST ELIZABETH FT THOMAS    KY
-## 20                          ST FRANCIS MEDICAL CENTER    LA
-## 21               BETH ISRAEL DEACONESS MEDICAL CENTER    MA
-## 22                         MARYLAND GENERAL  HOSPITAL    MD
+## 20            LSU HEALTH SCIENCES CENTER - SHREVEPORT    LA
+## 21                         NORTH SHORE MEDICAL CENTER    MA
+## 22                        JOHNS HOPKINS HOSPITAL, THE    MD
 ## 23                                CARY MEDICAL CENTER    ME
-## 24                HENRY FORD WEST BLOOMFIELD HOSPITAL    MI
+## 24                OAKWOOD HOSPITAL AND MEDICAL CENTER    MI
 ## 25                                  OWATONNA HOSPITAL    MN
-## 26            ST LOUIS-JOHN COCHRAN VA MEDICAL CENTER    MO
+## 26                       CHRISTIAN HOSPITAL NORTHEAST    MO
 ## 27                            CALHOUN HEALTH SERVICES    MS
-## 28                               SIDNEY HEALTH CENTER    MT
+## 28                        ST JOHN&#39;S LUTHERAN HOSPITAL    MT
 ## 29                             WAKEMED, CARY HOSPITAL    NC
 ## 30                     SAKAKAWEA MEDICAL CENTER - CAH    ND
 ## 31                         BOX BUTTE GENERAL HOSPITAL    NE
-## 32                       PORTSMOUTH REGIONAL HOSPITAL    NH
+## 32                   MARY HITCHCOCK MEMORIAL HOSPITAL    NH
 ## 33                 OUR LADY OF LOURDES MEDICAL CENTER    NJ
-## 34   HOLY CROSS HOSPITAL A DIV OF TAOS HEALTH SYSTEMS    NM
+## 34             REHOBOTH MCKINLEY CHRISTIAN HEALTH SER    NM
 ## 35                  SUMMERLIN HOSPITAL MEDICAL CENTER    NV
 ## 36                               MOUNT SINAI HOSPITAL    NY
-## 37                         TRUMBULL MEMORIAL HOSPITAL    OH
+## 37                                     UNION HOSPITAL    OH
 ## 38                       SAINT FRANCIS HOSPITAL SOUTH    OK
-## 39                   ST CHARLES MEDICAL CENTER - BEND    OR
-## 40                      HAHNEMANN UNIVERSITY HOSPITAL    PA
+## 39                                ST ANTHONY HOSPITAL    OR
+## 40                                       UPMC HORIZON    PA
 ## 41                     HOSPITAL HERMANOS MELENDEZ INC    PR
 ## 42                                   NEWPORT HOSPITAL    RI
-## 43                          CAROLINAS HOSPITAL SYSTEM    SC
+## 43                       CHARLESTON VA MEDICAL CENTER    SC
 ## 44 AVERA MCKENNAN HOSPITAL &amp; UNIVERSITY HEALTH CENTER    SD
 ## 45                                  CROCKETT HOSPITAL    TN
-## 46                     VALLEY REGIONAL MEDICAL CENTER    TX
+## 46                    THE HEART HOSPITAL BAYLOR PLANO    TX
 ## 47                        UINTAH BASIN MEDICAL CENTER    UT
 ## 48                  CARILION GILES COMMUNITY HOSPITAL    VA
 ## 49                                               &lt;NA&gt;    VI
 ## 50                     CENTRAL VERMONT MEDICAL CENTER    VT
 ## 51                 KITTITAS VALLEY COMMUNITY HOSPITAL    WA
 ## 52          WHEATON FRANCISCAN HEALTHCARE- ST FRANCIS    WI
-## 53                      MARTINSBURG VA MEDICAL CENTER    WV
+## 53                       PRINCETON COMMUNITY HOSPITAL    WV
 ## 54                  CAMPBELL COUNTY MEMORIAL HOSPITAL    WY
+</code></pre>
+
+<pre><code class="r">rankall(&quot;heart failure&quot;, 15)
+</code></pre>
+
+<pre><code>##                                    hospital state
+## 1                                      &lt;NA&gt;    AK
+## 2                      HALE COUNTY HOSPITAL    AL
+## 3             ST JOHN&#39;S HOSPITAL-BERRYVILLE    AR
+## 4            PAYSON REGIONAL MEDICAL CENTER    AZ
+## 5                   GOOD SAMARITAN HOSPITAL    CA
+## 6  CENTURA HEALTH-PORTER ADVENTIST HOSPITAL    CO
+## 7                      SAINT MARYS HOSPITAL    CT
+## 8                                      &lt;NA&gt;    DC
+## 9                                      &lt;NA&gt;    DE
+## 10           METROPOLITAN HOSPITAL OF MIAMI    FL
+## 11              CHESTATEE REGIONAL HOSPITAL    GA
+## 12                                     &lt;NA&gt;    GU
+## 13                                     &lt;NA&gt;    HI
+## 14            JONES REGIONAL MEDICAL CENTER    IA
+## 15               WEST VALLEY MEDICAL CENTER    ID
+## 16              ROSELAND COMMUNITY HOSPITAL    IL
+## 17            TERRE HAUTE REGIONAL HOSPITAL    IN
+## 18            UNIVERSITY OF KANSAS HOSPITAL    KS
+## 19                     SPRING VIEW HOSPITAL    KY
+## 20                    TULANE MEDICAL CENTER    LA
+## 21                NEWTON-WELLESLEY HOSPITAL    MA
+## 22                  MEDSTAR HARBOR HOSPITAL    MD
+## 23                  TOGUS VA MEDICAL CENTER    ME
+## 24            HENRY FORD WYANDOTTE HOSPITAL    MI
+## 25                 CAMBRIDGE MEDICAL CENTER    MN
+## 26       BARNES-JEWISH WEST COUNTY HOSPITAL    MO
+## 27               CLAY COUNTY MEDICAL CENTER    MS
+## 28                   HOLY ROSARY HEALTHCARE    MT
+## 29            IREDELL MEMORIAL HOSPITAL INC    NC
+## 30         PEMBINA COUNTY MEMORIAL HOSPITAL    ND
+## 31                  BRYANLGH MEDICAL CENTER    NE
+## 32                         COTTAGE HOSPITAL    NH
+## 33        NEWARK BETH ISRAEL MEDICAL CENTER    NJ
+## 34                        ESPANOLA HOSPITAL    NM
+## 35  SAINT ROSE DOMINICAN HOSPITAL - DE LIMA    NV
+## 36             COBLESKILL REGIONAL HOSPITAL    NY
+## 37                  GOOD SAMARITAN HOSPITAL    OH
+## 38             KINGFISHER REGIONAL HOSPITAL    OK
+## 39         LEGACY MOUNT HOOD MEDICAL CENTER    OR
+## 40                               UPMC HAMOT    PA
+## 41                  HOSPITAL PAVIA SANTURCE    PR
+## 42                                     &lt;NA&gt;    RI
+## 43          UPSTATE CAROLINA MEDICAL CENTER    SC
+## 44  LEAD - DEADWOOD REGIONAL HOSPITAL - CAH    SD
+## 45          MOUNTAIN HOME VA MEDICAL CENTER    TN
+## 46                HAMILTON GENERAL HOSPITAL    TX
+## 47             TIMPANOGOS REGIONAL HOSPITAL    UT
+## 48             ROCKINGHAM MEMORIAL HOSPITAL    VA
+## 49                                     &lt;NA&gt;    VI
+## 50                                     &lt;NA&gt;    VT
+## 51             PROVIDENCE ST PETER HOSPITAL    WA
+## 52                         WAUPUN MEM HSPTL    WI
+## 53       MONONGALIA COUNTY GENERAL HOSPITAL    WV
+## 54                IVINSON MEMORIAL HOSPITAL    WY
 </code></pre>
 
 <pre><code class="r">rankall(&quot;heart failure&quot;)
@@ -3952,7 +4017,7 @@ head(rankall(&quot;heart attack&quot;, 20), 10)
 ## 24                                        HARPER UNIVERSITY HOSPITAL    MI
 ## 25                        ESSENTIA HEALTH ST JOSEPH&#39;S MEDICAL CENTER    MN
 ## 26                                        NORTH KANSAS CITY HOSPITAL    MO
-## 27                                         SOUTH CENTRAL REG MED CTR    MS
+## 27                                   VA GULF COAST HEALTHCARE SYSTEM    MS
 ## 28                                      COMMUNITY MEDICAL CENTER INC    MT
 ## 29                               FIRSTHEALTH MOORE REGIONAL HOSPITAL    NC
 ## 30                                        ST ALOISIUS MEDICAL CENTER    ND
@@ -4020,7 +4085,7 @@ head(rankall(&quot;heart attack&quot;, 20), 10)
 ## 32               LAKES REGION GENERAL HOSPITAL    NH
 ## 33              BERGEN REGIONAL MEDICAL CENTER    NJ
 ## 34                                UNM HOSPITAL    NM
-## 35        CARSON TAHOE REGIONAL MEDICAL CENTER    NV
+## 35              RENOWN REGIONAL MEDICAL CENTER    NV
 ## 36                    ONEIDA HEALTHCARE CENTER    NY
 ## 37          COSHOCTON COUNTY MEMORIAL HOSPITAL    OH
 ## 38                MERCY MEMORIAL HEALTH CENTER    OK
