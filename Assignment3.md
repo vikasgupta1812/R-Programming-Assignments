@@ -403,9 +403,6 @@ outcome[, 11] <- as.numeric(outcome[, 11])
 
 ```
 ## Warning: NAs introduced by coercion
-```
-
-```r
 ## You may get a warning about NAs being introduced; that is okay
 ```
 
@@ -5003,7 +5000,3 @@ if (num == "best") {
 ```r
 `?`(tapply)
 ```
-
-
-
-
